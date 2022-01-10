@@ -39,10 +39,8 @@ def paginated(func):
         pageInfo = helpers.dict_search(response, "pageInfo", list_depth=0)[0]['pageInfo']
         pages = pageInfo['totalResults']/pageInfo['resultsPerPage']
         
-        if pages > 1:
-            combined.append(response)
-            while response['nextPageToken']:
-                combined.append(wrapper(*args, **kwargs, pageToken = response['nextPageToken']))
+        while response['nextPageToken']:
+            combined.append(wrapper(*args, **kwargs, pageToken = response['nextPageToken']))
         else:
             return response  
         return combined        

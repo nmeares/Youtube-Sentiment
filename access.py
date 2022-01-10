@@ -31,7 +31,7 @@ def api_init(key):
     return googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=key)
 
-
+# Decorator function to loop paginated responses
 def paginated(func):
     combined = []
     def wrapper(*args, **kwargs):

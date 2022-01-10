@@ -41,9 +41,10 @@ def video_stats(api_object: googleapiclient.discovery.build, id):
         id=id
     )
     
-    helpers.dict_search(request, ["totalResults", "resultsPerPage"])
+    response = request.execute() 
+    helpers.dict_search(response, ["totalResults", "resultsPerPage"])
     
-    return request.execute() 
+    return 
 
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId):
     

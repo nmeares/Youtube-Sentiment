@@ -69,7 +69,7 @@ def video_stats(api_object: googleapiclient.discovery.build, videoCategoryId):
         order="viewCount"
     )
     response = request.execute()
-    return helpers.dict_search(response, ["kind", "videoId", "title", "channelTitle"])
+    return helpers.dict_search(response, ["kind"])
 
 if __name__ == "__main__":
     main()

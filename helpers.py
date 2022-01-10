@@ -4,8 +4,8 @@
 def dict_search(dictionary: dict, search, list_depth=1):
     '''Nested dictionary search
     ------
-    Allows user to recursively search a nested dictionary or list structure for specified key\n
-    The depth at which any further nesting is collapsed can be specified using 'list_depth'
+    Allows user to recursively search a nested dictionary for specified key\n
+    The depth at which any list nesting is collapsed can be specified using 'list_depth'
     
     Parameters
     ----------

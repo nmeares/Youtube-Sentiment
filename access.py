@@ -42,7 +42,7 @@ def paginated(func):
         if pages > 1:
             combined.append(response)
             while response['nextPageToken']:
-                combined.append(func(*args, **kwargs, pageToken = response['nextPageToken']))
+                combined.append(wrapper(*args, **kwargs, pageToken = response['nextPageToken']))
             return combined
         else:
             return response          

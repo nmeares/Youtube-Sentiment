@@ -25,3 +25,8 @@ def main():
  
 if __name__ == "__main__":
     main()
+    
+
+    
+# TODO: search for individual video's stats using the video list call
+# TODO: Work out sentiment from title, description or comments (can we see all comments?)

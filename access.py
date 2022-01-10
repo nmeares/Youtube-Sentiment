@@ -19,7 +19,10 @@ def main():
     
     pprint(stats)
 
+def paginated(func):
     
+    
+    pass    
 
 def api_init(key):
     # Disable OAuthlib's HTTPS verification when running locally.

@@ -23,12 +23,13 @@ def dict_search(dictionary: dict, search, list_depth=1):
                 # If key doesn't match run find on value
                 else:
                     find(value, search)
-        # If list, loop through list items
+        # If list, loop through list items and run find
         elif isinstance(d, list):
             for i in range(0,len(d)):
                 # Increment list depth by one to keep track of depth
                 dict_search.list_depth =+ 1
                 find(d[i], search)
+                # Apend temp dict at list depth specified by user
                 if dict_search.list_depth == list_depth:
                     values.append(temp.copy())
   

@@ -43,9 +43,9 @@ def paginated(func):
             combined.append(response)
             while response['nextPageToken']:
                 combined.append(wrapper(*args, **kwargs, pageToken = response['nextPageToken']))
-            return combined
         else:
-            return response          
+            return response  
+        return combined        
     return wrapper
 
 # Retrieve stats for video IDs

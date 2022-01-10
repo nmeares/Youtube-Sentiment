@@ -53,7 +53,8 @@ def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None)
     
     request = api_object.videos().list(
         part="statistics",
-        id=id
+        id=id,
+        pageToken=pageToken
     )
     return request.execute() 
 

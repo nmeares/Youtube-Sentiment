@@ -2,7 +2,25 @@
 
 # Nested dictionary search function 
 def dict_search(dictionary: dict, search, list_depth=1):
+    '''Nested dictionary search
+    ------
+    Allows user to recursively search a nested dictionary or list structure for specified key
+    The depth at which any further nesting is collapsed can be specified using 'list_depth'
     
+    Parameters
+    ----------
+    dictionary : dict
+        Nested dictionary or list
+    search : str or list
+        Search 'key' string or list
+    list_depth : int, optional
+        Allows user to specify depth at which to collapse nested list, by default 1
+
+    Returns
+    -------
+    list
+        Function returns a list of dicts
+    '''
     # Ensure search is a list
     search = [search] if isinstance(search, str) else search
     # Initiate data structures

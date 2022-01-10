@@ -20,8 +20,9 @@ def main():
     pprint(stats)
 
 def paginated(func):
-    
-    
+    def wrapper():
+        
+        pass
     pass    
 
 def api_init(key):

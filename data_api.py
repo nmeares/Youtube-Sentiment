@@ -6,6 +6,7 @@ import googleapiclient.errors
 from functools import wraps
 from pprint import pprint
 
+# TODO: Make these into a class?
 
 def api_init(key):
     # Disable OAuthlib's HTTPS verification when running locally.
@@ -96,7 +97,3 @@ def category_search(api_object: googleapiclient.discovery.build, videoCategoryId
         maxResults=50
     )
     return request.execute()
-
-    
-# TODO: search for individual video's stats using the video list call
-# TODO: Work out sentiment from title, description or comments (can we see all comments?)

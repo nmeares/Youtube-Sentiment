@@ -33,8 +33,8 @@ def api_init(key):
 
 
 def paginated(func):
+    combined = []
     def wrapper(*args, **kwargs):
-        combined = []
         response = func(*args, **kwargs)
         pageInfo = helpers.dict_search(response, "pageInfo", list_depth=0)[0]['pageInfo']
         pages = pageInfo['totalResults']/pageInfo['resultsPerPage']

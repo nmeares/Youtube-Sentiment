@@ -3,6 +3,7 @@ import json
 import helpers
 import googleapiclient.discovery
 import googleapiclient.errors
+from functools import wraps
 from pprint import pprint
 
 def main():
@@ -34,6 +35,7 @@ def api_init(key):
 # Decorator function to loop paginated responses
 def paginated(func):
     combined = []
+    @wraps
     def wrapper(*args, **kwargs):
         response = func(*args, **kwargs)
         combined.append(response)
@@ -45,6 +47,7 @@ def paginated(func):
     return wrapper
 
 # Retrieve stats for video IDs
+@paginated
 def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None):
     # Convert to string list
     id = ",".join(id) if isinstance(id, str) else id
@@ -55,8 +58,9 @@ def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None)
         pageToken=pageToken,
         maxResults=50
     )
-    return request.execute() 
-
+    return request.execute()
+ 
+@paginated
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
     
     request = api_object.videos().list(
@@ -69,6 +73,7 @@ def popular(api_object: googleapiclient.discovery.build, videoCategoryId, pageTo
     return request.execute()
 
 # Retrieve list of video categories
+@paginated
 def VideoCategories(api_object: googleapiclient.discovery.build, regionCode, pageToken=None):
     
     # API videoCategory list request

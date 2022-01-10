@@ -3,10 +3,13 @@
 # Nested dictionary search function 
 def dict_search(dictionary: dict, search, list_depth=1):
     
+    # Ensure search is a list
     search = [search] if isinstance(search, str) else search
+    # Initiate data structures
     values = []
-    dict_search.list_depth = 0
     temp = {}
+    # Set list depth counter to zero
+    dict_search.list_depth = 0
     # Recursive function loops through nesting structure
     def find(d : dict, search):
         # If dict, check if key matches and append value

@@ -32,7 +32,7 @@ def paginated(func):
         return combined    
     return wrapper
 
-# Retrieve stats for video IDs
+# Retrieve stats for video specific IDs
 @paginated
 def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None):
     # Convert to string list
@@ -45,7 +45,8 @@ def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None)
         maxResults=50
     )
     return request.execute()
- 
+
+# Retrieve list of most popular videos
 @paginated
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
     
@@ -82,6 +83,7 @@ def VideoCategories(api_object: googleapiclient.discovery.build, regionCode, pag
     
     return categories
 
+# Search by category ID
 @paginated
 def category_search(api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
     

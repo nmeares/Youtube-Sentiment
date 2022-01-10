@@ -60,7 +60,7 @@ def VideoCategories(api_object: googleapiclient.discovery.build, regionCode):
     
     return categories
 
-def video_stats(api_object: googleapiclient.discovery.build, videoCategoryId):
+def category_search(api_object: googleapiclient.discovery.build, videoCategoryId):
     
     request = api_object.search().list(
         part="snippet",

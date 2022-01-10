@@ -13,7 +13,7 @@ def main():
     youtube = api_init(DEVELOPER_KEY)
 
     stats = category_search(youtube, 28)
-    
+    ids = helpers.dict_search(stats, "videoId")
     
     pprint(stats)
 

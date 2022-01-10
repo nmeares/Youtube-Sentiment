@@ -15,7 +15,7 @@ def dict_search(dictionary: dict, search, list_depth=1):
                 if key in search:
                     temp[key] = value
                     if list_depth == 0:
-                        values.append(temp)
+                        values.append(temp.copy())
                 # If key doesn't match run search on value
                 else:
                     find(value, search)
@@ -25,7 +25,7 @@ def dict_search(dictionary: dict, search, list_depth=1):
                 dict_search.list_depth =+ 1
                 find(d[i], search)
                 if dict_search.list_depth == list_depth:
-                    values.append(temp)
+                    values.append(temp.copy())
   
     find(dictionary, search)
     return values

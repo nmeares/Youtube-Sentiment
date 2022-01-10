@@ -42,7 +42,7 @@ def video_stats(api_object: googleapiclient.discovery.build, id):
     )
     
     response = request.execute() 
-    helpers.dict_search(response, ["totalResults", "resultsPerPage"])
+    helpers.dict_search(response, ["totalResults", "resultsPerPage"], list_depth=0)
     
     return 
 

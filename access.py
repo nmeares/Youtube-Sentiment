@@ -36,13 +36,11 @@ def paginated(func):
     combined = []
     def wrapper(*args, **kwargs):
         response = func(*args, **kwargs)
-        pageInfo = helpers.dict_search(response, "pageInfo", list_depth=0)[0]['pageInfo']
-        pages = pageInfo['totalResults']/pageInfo['resultsPerPage']
         combined.append(response)
+        pageToken = response['nextPageToken']
         while response['nextPageToken']:
-            combined.append(wrapper(*args, **kwargs, pageToken = response['nextPageToken']))
-        else:
-            return combined       
+            combined.append(wrapper(*args, **kwargs, pageToken=pageToken))
+        return combined    
     return wrapper
 
 # Retrieve stats for video IDs

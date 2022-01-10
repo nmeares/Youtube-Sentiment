@@ -40,6 +40,7 @@ def paginated(func):
         pages = pageInfo['totalResults']/pageInfo['resultsPerPage']
         
         if pages > 1:
+            combined.append(response)
             while response['nextPageToken']:
                 combined.append(func(*args, **kwargs, pageToken = response['nextPageToken']))
         else:
@@ -90,6 +91,7 @@ def VideoCategories(api_object: googleapiclient.discovery.build, regionCode, pag
     
     return categories
 
+@paginated
 def category_search(api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
     
     request = api_object.search().list(

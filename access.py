@@ -38,7 +38,7 @@ def paginated(func):
         response = func(*args, **kwargs)
         combined.append(response)
         pageToken = response['nextPageToken']
-        while response['nextPageToken']:
+        while pageToken:
             combined.append(wrapper(*args, **kwargs, pageToken=pageToken))
         return combined    
     return wrapper

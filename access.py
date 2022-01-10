@@ -12,7 +12,8 @@ def main():
     
     youtube = api_init(DEVELOPER_KEY)
 
-    stats = video_stats(youtube, 28)
+    stats = category_search(youtube, 28)
+    
     
     pprint(stats)
 
@@ -78,8 +79,9 @@ def category_search(api_object: googleapiclient.discovery.build, videoCategoryId
         videoCategoryId=videoCategoryId,
         order="viewCount"
     )
-    response = request.execute()
-    return helpers.dict_search(response, ["videoId", "title", "channelTitle", "publishedAt"])
+    return request.execute()
+
+
 
 if __name__ == "__main__":
     main()

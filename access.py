@@ -31,7 +31,7 @@ def api_init(key):
 
 
 def video_stats(api_object: googleapiclient.discovery.build, id):
-    
+    id = ",".join(id) if isinstance(id, str) else id
     pass
 
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId):

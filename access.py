@@ -30,6 +30,10 @@ def api_init(key):
         api_service_name, api_version, developerKey=key)
 
 
+def video_stats(api_object: googleapiclient.discovery.build, id):
+    
+    pass
+
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId):
     
     request = api_object.videos().list(

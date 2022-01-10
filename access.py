@@ -52,7 +52,8 @@ def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None)
     request = api_object.videos().list(
         part="statistics",
         id=id,
-        pageToken=pageToken
+        pageToken=pageToken,
+        maxResults=50
     )
     return request.execute() 
 
@@ -62,7 +63,8 @@ def popular(api_object: googleapiclient.discovery.build, videoCategoryId, pageTo
         part="snippet",
         chart="mostPopular",
         videoCategoryId=videoCategoryId,
-        pageToken=pageToken
+        pageToken=pageToken,
+        maxResults=50
     )
     return request.execute()
 
@@ -73,7 +75,8 @@ def VideoCategories(api_object: googleapiclient.discovery.build, regionCode, pag
     request = api_object.videoCategories().list(
         part="snippet",
         regionCode=regionCode,
-        pageToken=pageToken
+        pageToken=pageToken,
+        maxResults=50
     )
     response = request.execute()
     
@@ -96,7 +99,8 @@ def category_search(api_object: googleapiclient.discovery.build, videoCategoryId
         type="video",
         videoCategoryId=videoCategoryId,
         order="viewCount",
-        pageToken=pageToken
+        pageToken=pageToken,
+        maxResults=50
     )
     return request.execute()
 

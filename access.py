@@ -33,8 +33,8 @@ def api_init(key):
 
 
 def paginated(func):
-    combined = []
     def wrapper(*args, **kwargs):
+        combined = []
         response = func(*args, **kwargs)
         pageInfo = helpers.dict_search(response, "pageInfo", list_depth=0)
         pages = pageInfo['totalResults']/pageInfo['resultsPerPage']
@@ -43,9 +43,10 @@ def paginated(func):
             combined.append(response)
             while response['nextPageToken']:
                 combined.append(func(*args, **kwargs, pageToken = response['nextPageToken']))
+            return combined
         else:
             return response          
-    return combined
+    return wrapper
 
 # Retrieve stats for video IDs
 def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None):

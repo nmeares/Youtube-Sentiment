@@ -18,12 +18,7 @@ def main():
     stats = video_stats(youtube, ids)
     
     pprint(stats)
-
-def paginated(func):
-    def wrapper():
-        
-        pass
-    pass    
+   
 
 def api_init(key):
     # Disable OAuthlib's HTTPS verification when running locally.
@@ -45,6 +40,9 @@ def video_stats(api_object: googleapiclient.discovery.build, id):
         part="statistics",
         id=id
     )
+    
+    helpers.dict_search(request, ["totalResults", "resultsPerPage"])
+    
     return request.execute() 
 
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId):

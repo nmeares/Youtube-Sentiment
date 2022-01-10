@@ -29,10 +29,16 @@ def api_init(key):
     return googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=key)
 
-
+# Retrieve stats for video IDs
 def video_stats(api_object: googleapiclient.discovery.build, id):
+    # Convert to string list
     id = ",".join(id) if isinstance(id, str) else id
-    pass
+    
+    request = api_object.videos().list(
+        part="statistics",
+        id=id
+    )
+    return request.execute() 
 
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId):
     

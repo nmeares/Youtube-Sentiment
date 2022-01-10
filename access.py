@@ -31,6 +31,14 @@ def api_init(key):
     return googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=key)
 
+
+def paginated(func):
+    def wrapper(*args, **kwargs):
+        response = func(*args, **kwargs)
+        pageInfo = helpers.dict_search(response, "pageInfo", list_depth=0)
+        pages = pageInfo['totalResults']/pageInfo['resultsPerPage']
+        if 
+
 # Retrieve stats for video IDs
 def video_stats(api_object: googleapiclient.discovery.build, id):
     # Convert to string list
@@ -40,11 +48,7 @@ def video_stats(api_object: googleapiclient.discovery.build, id):
         part="statistics",
         id=id
     )
-    
-    response = request.execute() 
-    pageInfo = helpers.dict_search(response, "pageInfo", list_depth=0)
-    
-    return 
+    return request.execute() 
 
 def popular(api_object: googleapiclient.discovery.build, videoCategoryId):
     

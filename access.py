@@ -15,6 +15,8 @@ def main():
     stats = category_search(youtube, 28)
     ids = helpers.dict_search(stats, "videoId")
     ids = [id['videoId'] for id in ids]
+    stats = video_stats(youtube, ids)
+    
     pprint(stats)
 
     

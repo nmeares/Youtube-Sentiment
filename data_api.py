@@ -9,6 +9,7 @@ class youtube():
     
     def __init__(self, api_key) -> None:
         self.api_key = api_key
+        self.api = self.api_init(self.api_key)
     
     def api_init(self, key):
         # Disable OAuthlib's HTTPS verification when running locally.

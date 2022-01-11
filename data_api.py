@@ -38,11 +38,11 @@ class youtube():
 
     # Retrieve stats for video specific IDs
     @_paginated
-    def video_stats(self, api_object: googleapiclient.discovery.build, id, pageToken=None):
+    def video_stats(self, id, pageToken=None):
         # Convert to string list
         id = ",".join(id) if isinstance(id, str) else id
         
-        request = api_object.videos().list(
+        request = self.api.videos().list(
             part="statistics",
             id=id,
             pageToken=pageToken,
@@ -52,9 +52,9 @@ class youtube():
 
     # Retrieve list of most popular videos
     @_paginated
-    def popular(self, api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
+    def popular(self, videoCategoryId, pageToken=None):
         
-        request = api_object.videos().list(
+        request = self.api.videos().list(
             part="snippet",
             chart="mostPopular",
             videoCategoryId=videoCategoryId,
@@ -65,10 +65,10 @@ class youtube():
 
     # Retrieve list of video categories
     @_paginated
-    def VideoCategories(self, api_object: googleapiclient.discovery.build, regionCode, pageToken=None):
+    def VideoCategories(self, regionCode, pageToken=None):
         
         # API videoCategory list request
-        request = api_object.videoCategories().list(
+        request = self.api.videoCategories().list(
             part="snippet",
             regionCode=regionCode,
             pageToken=pageToken,
@@ -89,9 +89,9 @@ class youtube():
 
     # Search by category ID
     @_paginated
-    def category_search(self, api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
+    def category_search(self, videoCategoryId, pageToken=None):
         
-        request = api_object.search().list(
+        request = self.api.search().list(
             part="snippet",
             type="video",
             videoCategoryId=videoCategoryId,

@@ -8,7 +8,7 @@ from pprint import pprint
 class youtube():
     
     def __init__(self, api_key) -> None:
-        super().__init__()
+        self.api_key = api_key
     
     def api_init(key):
         # Disable OAuthlib's HTTPS verification when running locally.

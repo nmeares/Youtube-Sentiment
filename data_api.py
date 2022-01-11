@@ -10,7 +10,7 @@ class youtube():
     def __init__(self, api_key) -> None:
         self.api_key = api_key
     
-    def api_init(key):
+    def api_init(self, key):
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -22,7 +22,7 @@ class youtube():
             api_service_name, api_version, developerKey=key)
 
     # Decorator function to expand paginated responses
-    def paginated(func):
+    def _paginated(func):
         combined = []
         @wraps
         def wrapper(*args, **kwargs):
@@ -36,8 +36,8 @@ class youtube():
         return wrapper
 
     # Retrieve stats for video specific IDs
-    @paginated
-    def video_stats(api_object: googleapiclient.discovery.build, id, pageToken=None):
+    @_paginated
+    def video_stats(self, api_object: googleapiclient.discovery.build, id, pageToken=None):
         # Convert to string list
         id = ",".join(id) if isinstance(id, str) else id
         
@@ -50,8 +50,8 @@ class youtube():
         return request.execute()
 
     # Retrieve list of most popular videos
-    @paginated
-    def popular(api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
+    @_paginated
+    def popular(self, api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
         
         request = api_object.videos().list(
             part="snippet",
@@ -63,8 +63,8 @@ class youtube():
         return request.execute()
 
     # Retrieve list of video categories
-    @paginated
-    def VideoCategories(api_object: googleapiclient.discovery.build, regionCode, pageToken=None):
+    @_paginated
+    def VideoCategories(self, api_object: googleapiclient.discovery.build, regionCode, pageToken=None):
         
         # API videoCategory list request
         request = api_object.videoCategories().list(
@@ -87,8 +87,8 @@ class youtube():
         return categories
 
     # Search by category ID
-    @paginated
-    def category_search(api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
+    @_paginated
+    def category_search(self, api_object: googleapiclient.discovery.build, videoCategoryId, pageToken=None):
         
         request = api_object.search().list(
             part="snippet",

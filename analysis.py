@@ -1,10 +1,8 @@
 import pprint
 import json
 
-import data_api
+from data_api import youtube
 import helpers
-
-
 
 
 def main():
@@ -12,12 +10,12 @@ def main():
     with open("./key.json") as f:
         DEVELOPER_KEY = json.load(f)['key']
     
-    youtube = data_api.api_init(DEVELOPER_KEY)
+    yt = youtube(DEVELOPER_KEY)
 
-    stats = data_api.category_search(youtube, 28)
+    stats = yt.category_search(youtube, 28)
     ids = helpers.dict_search(stats, "videoId")
     ids = [id['videoId'] for id in ids]
-    stats = data_api.video_stats(youtube, ids)
+    stats = yt.video_stats(youtube, ids)
     
     pprint(stats)
 

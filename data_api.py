@@ -3,27 +3,8 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from functools import wraps
 
-
-class youtube():
-    
-    def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:
-        self.api_key = api_key
-        self.maxResults = resultsPerPage
-        self.maxPages = maxpages
-        
-        # Disable OAuthlib's HTTPS verification when running locally.
-        # *DO NOT* leave this option enabled in production.
-        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-        self.api_service_name = "youtube"
-        self.api_version = "v3"
-        self.api = googleapiclient.discovery.build(
-            self.api_service_name, 
-            self.api_version, 
-            developerKey=self.api_key)
-  
-    
-    # Decorator function to expand paginated responses
-    def _paginated(self, max_pages):
+# Decorator function to expand paginated responses
+    def _paginated(max_pages):
         def decorate(func):
             # Memorise responses and return them as a list
             combined = []
@@ -45,8 +26,24 @@ class youtube():
                 return combined
             return wrapper
         return decorate
-
+class youtube():
+    
+    def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:
+        self.api_key = api_key
+        self.maxResults = resultsPerPage
+        self.maxPages = maxpages
+        
+        # Disable OAuthlib's HTTPS verification when running locally.
+        # *DO NOT* leave this option enabled in production.
+        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+        self.api_service_name = "youtube"
+        self.api_version = "v3"
+        self.api = googleapiclient.discovery.build(
+            self.api_service_name, 
+            self.api_version, 
+            developerKey=self.api_key)
   
+
     # Retrieve stats for video specific IDs
     @_paginated(self.maxPages)
     def video_stats(self, id, pageToken=None):
@@ -75,15 +72,12 @@ class youtube():
         return request.execute()
 
     # Retrieve list of video categories
-    @_paginated(self.maxPages)
-    def VideoCategories(self, regionCode, pageToken=None):
+    def VideoCategories(self, regionCode):
         
         # API videoCategory list request
         request = self.api.videoCategories().list(
             part="snippet",
             regionCode=regionCode,
-            pageToken=pageToken,
-            maxResults=self.maxResults
         )
         return request.execute()
 

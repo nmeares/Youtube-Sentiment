@@ -87,7 +87,6 @@ class youtube():
                 "title":row['snippet']['title'],
                 "assignable":row['snippet']['assignable']
             })
-        
         return categories
 
     # Search by category ID

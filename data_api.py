@@ -36,7 +36,7 @@ class youtube():
         return wrapper
 
     # Retrieve stats for video specific IDs
-    @_paginated
+    @_paginated()
     def video_stats(self, id, pageToken=None):
         # Convert to string list
         id = ",".join(id) if isinstance(id, str) else id
@@ -50,7 +50,7 @@ class youtube():
         return request.execute()
 
     # Retrieve list of most popular videos
-    @_paginated
+    @_paginated()
     def popular(self, videoCategoryId, pageToken=None):
         
         request = self.api.videos().list(
@@ -63,7 +63,7 @@ class youtube():
         return request.execute()
 
     # Retrieve list of video categories
-    @_paginated
+    @_paginated()
     def VideoCategories(self, regionCode, pageToken=None):
         
         # API videoCategory list request
@@ -87,7 +87,7 @@ class youtube():
         return categories
 
     # Search by category ID
-    @_paginated
+    @_paginated()
     def category_search(self, categoryId:int, pageToken=None):
         
         request = self.api.search().list(

@@ -4,6 +4,20 @@ import googleapiclient.errors
 from functools import wraps
 from pprint import pprint
 
+
+# Decorator function to expand paginated responses
+def _paginated(func):
+    combined = []
+    @wraps
+    def wrapper(*args, **kwargs):
+        response = func(*args, **kwargs)
+        combined.append(response)
+        pageToken = response['nextPageToken']
+        kwargs['pageToken'] = pageToken
+        while pageToken:
+            combined.append(wrapper(*args, **kwargs))
+        return combined    
+    return wrapper
 class youtube():
     
     def __init__(self, api_key) -> None:
@@ -20,20 +34,6 @@ class youtube():
 
         return googleapiclient.discovery.build(
             api_service_name, api_version, developerKey=key)
-
-    # Decorator function to expand paginated responses
-    def _paginated(func):
-        combined = []
-        @wraps
-        def wrapper(*args, **kwargs):
-            response = func(*args, **kwargs)
-            combined.append(response)
-            pageToken = response['nextPageToken']
-            kwargs['pageToken'] = pageToken
-            while pageToken:
-                combined.append(wrapper(*args, **kwargs))
-            return combined    
-        return wrapper
 
     # Retrieve stats for video specific IDs
     @_paginated

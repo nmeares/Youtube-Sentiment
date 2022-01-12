@@ -7,6 +7,7 @@ from pprint import pprint
 
 # Decorator function to expand paginated responses
 def _paginated(func):
+    # Memorise responses and return them as a list
     combined = []
     @wraps(func)
     def wrapper(*args, **kwargs):

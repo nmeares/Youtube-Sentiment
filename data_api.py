@@ -5,11 +5,12 @@ from functools import wraps
 
 
 # Decorator function to expand paginated responses
-def _paginated(func):
+def _paginated(func, max_pages=None):
     # Memorise responses and return them as a list
     combined = []
     @wraps(func)
     def wrapper(*args, **kwargs):
+        if page < max_pages:
         response = func(*args, **kwargs)
         combined.append(response)
         try:

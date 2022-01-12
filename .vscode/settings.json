@@ -1,3 +1,12 @@
 {
-    "gitdoc.enabled": true
+    "gitdoc.enabled": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:yt_sentiment}/yt_sentiment.db",
+            "name": "yt_database"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }

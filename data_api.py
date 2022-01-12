@@ -88,12 +88,12 @@ class youtube():
 
     # Search by category ID
     @_paginated
-    def category_search(self, videoCategoryId:int, pageToken=None):
+    def category_search(self, categoryId:int, pageToken=None):
         
         request = self.api.search().list(
             part="snippet",
             type="video",
-            videoCategoryId=videoCategoryId,
+            videoCategoryId=categoryId,
             order="viewCount",
             pageToken=pageToken,
             maxResults=50

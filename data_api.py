@@ -19,8 +19,11 @@ def _paginated(func):
             pageToken = None
         kwargs['pageToken'] = pageToken
         while pageToken != None:
-            combined.append(wrapper(*args, **kwargs))
-        return combined    
+            try:
+                combined.append(wrapper(*args, **kwargs))
+            except:
+                return combined
+        return combined
     return wrapper
 
 class youtube():
@@ -29,21 +32,16 @@ class youtube():
         self.api_key = api_key
         self.maxResults = maxResults
         
+        # Disable OAuthlib's HTTPS verification when running locally.
+        # *DO NOT* leave this option enabled in production.
+        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
         self.api_service_name = "youtube"
         self.api_version = "v3"
         self.api = googleapiclient.discovery.build(
             self.api_service_name, 
             self.api_version, 
             developerKey=self.api_key)
-        
-    def api_init(self, key):
-        # Disable OAuthlib's HTTPS verification when running locally.
-        # *DO NOT* leave this option enabled in production.
-        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-        return 
-
-
+  
     # Retrieve stats for video specific IDs
     @_paginated
     def video_stats(self, id, pageToken=None):

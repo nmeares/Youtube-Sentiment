@@ -25,7 +25,7 @@ def _paginated(max_pages):
             return combined
         return wrapper
     return decorate
-
+s
 class youtube():
     
     def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:

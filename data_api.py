@@ -28,18 +28,20 @@ class youtube():
     def __init__(self, api_key, maxResults=50) -> None:
         self.api_key = api_key
         self.maxResults = maxResults
-        self.api = self.api_init(self.api_key)
+        
+        self.api_service_name = "youtube"
+        self.api_version = "v3"
+        self.api = googleapiclient.discovery.build(
+            self.api_service_name, 
+            self.api_version, 
+            developerKey=self.api_key)
         
     def api_init(self, key):
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-        api_service_name = "youtube"
-        api_version = "v3"
-
-        return googleapiclient.discovery.build(
-            api_service_name, api_version, developerKey=key)
+        return 
 
 
     # Retrieve stats for video specific IDs

@@ -25,7 +25,7 @@ class youtube():
     def _paginated(func):
         combined = []
         @wraps
-        def wrapper(self, *args, **kwargs):
+        def wrapper(*args, **kwargs):
             response = func(*args, **kwargs)
             combined.append(response)
             pageToken = response['nextPageToken']

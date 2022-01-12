@@ -23,7 +23,7 @@ class youtube():
   
     
     # Decorator function to expand paginated responses
-    def _paginated(max_pages):
+    def _paginated(self, max_pages):
         def decorate(func):
             # Memorise responses and return them as a list
             combined = []
@@ -32,7 +32,7 @@ class youtube():
             def wrapper(*args, **kwargs):
                 nonlocal page
                 while page < max_pages:
-                    response = args[0].func(*args, **kwargs)
+                    response = func(*args, **kwargs)
                     combined.append(response)
                     page += 1
                     try:

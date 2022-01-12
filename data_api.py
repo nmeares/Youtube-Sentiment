@@ -4,28 +4,27 @@ import googleapiclient.errors
 from functools import wraps
 
 # Decorator function to expand paginated responses
-    def _paginated(max_pages):
-        def decorate(func):
-            # Memorise responses and return them as a list
-            combined = []
-            page = 0
-            @wraps(func)
-            def wrapper(*args, **kwargs):
-                nonlocal page
-                while page < max_pages:
-                    response = func(*args, **kwargs)
-                    combined.append(response)
-                    page += 1
-                    try:
-                        pageToken = response['nextPageToken']
-                        kwargs['pageToken'] = pageToken
-                        wrapper(*args, **kwargs)
-                    except:
-                        return combined
-                
-                return combined
-            return wrapper
-        return decorate
+def _paginated(max_pages):
+    def decorate(func):
+        # Memorise responses and return them as a list
+        combined = []
+        page = 1
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            nonlocal page
+            while page <= max_pages:
+                response = func(*args, **kwargs)
+                combined.append(response)
+                page += 1
+                try:
+                    pageToken = response['nextPageToken']
+                    kwargs['pageToken'] = pageToken
+                    wrapper(*args, **kwargs)
+                except:
+                    return combined
+            return combined
+        return wrapper
+    return decorate
 class youtube():
     
     def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:
@@ -45,7 +44,7 @@ class youtube():
   
 
     # Retrieve stats for video specific IDs
-    @_paginated(self.maxPages)
+    @_paginated(2) # Increase paginate in prod
     def video_stats(self, id, pageToken=None):
         # Convert to string list
         id = ",".join(id) if isinstance(id, str) else id
@@ -59,7 +58,7 @@ class youtube():
         return request.execute()
 
     # Retrieve list of most popular videos
-    @_paginated(self.maxPages)
+    @_paginated(2) # Increase paginate in prod
     def popular(self, videoCategoryId, pageToken=None):
         
         request = self.api.videos().list(
@@ -82,7 +81,7 @@ class youtube():
         return request.execute()
 
     # Search by category ID
-    @_paginated(self.maxPages)
+    @_paginated(2) # Increase paginate in prod
     def category_search(self, categoryId:int, pageToken=None):
         
         request = self.api.search().list(

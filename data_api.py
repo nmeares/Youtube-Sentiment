@@ -5,13 +5,14 @@ from functools import wraps
 
 
 # Decorator function to expand paginated responses
-def _paginated(func, max_pages=None):
+def _paginated(func, max_pages):
     # Memorise responses and return them as a list
     combined = []
     page = 0
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if page < max_pages:
+        nonlocal page
+        while page < max_pages:
             response = func(*args, **kwargs)
             combined.append(response)
             page += 1

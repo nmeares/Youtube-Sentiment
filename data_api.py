@@ -4,29 +4,6 @@ import googleapiclient.errors
 from functools import wraps
 
 
-# Decorator function to expand paginated responses
-def _paginated(max_pages):
-    def decorate(func):
-        # Memorise responses and return them as a list
-        combined = []
-        page = 0
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            nonlocal page
-            while page < max_pages:
-                response = func(*args, **kwargs)
-                combined.append(response)
-                page += 1
-                try:
-                    pageToken = response['nextPageToken']
-                    kwargs['pageToken'] = pageToken
-                    wrapper(*args, **kwargs)
-                except:
-                    return combined
-            
-            return combined
-        return wrapper
-    return decorate
 class youtube():
     
     def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:
@@ -43,6 +20,32 @@ class youtube():
             self.api_service_name, 
             self.api_version, 
             developerKey=self.api_key)
+  
+    
+    # Decorator function to expand paginated responses
+    def _paginated(max_pages):
+        def decorate(func):
+            # Memorise responses and return them as a list
+            combined = []
+            page = 0
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                nonlocal page
+                while page < max_pages:
+                    response = args[0].func(*args, **kwargs)
+                    combined.append(response)
+                    page += 1
+                    try:
+                        pageToken = response['nextPageToken']
+                        kwargs['pageToken'] = pageToken
+                        wrapper(*args, **kwargs)
+                    except:
+                        return combined
+                
+                return combined
+            return wrapper
+        return decorate
+
   
     # Retrieve stats for video specific IDs
     @_paginated(self.maxPages)

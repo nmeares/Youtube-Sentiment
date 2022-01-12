@@ -16,9 +16,8 @@ def _paginated(func):
             pageToken = response['nextPageToken']
         except:
             pageToken = None
-        
         kwargs['pageToken'] = pageToken
-        while pageToken:
+        while pageToken != None:
             combined.append(wrapper(*args, **kwargs))
         return combined    
     return wrapper

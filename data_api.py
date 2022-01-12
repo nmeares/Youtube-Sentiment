@@ -5,32 +5,34 @@ from functools import wraps
 
 
 # Decorator function to expand paginated responses
-def _paginated(func, max_pages):
-    # Memorise responses and return them as a list
-    combined = []
-    page = 0
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        nonlocal page
-        while page < max_pages:
-            response = func(*args, **kwargs)
-            combined.append(response)
-            page += 1
-            try:
-                pageToken = response['nextPageToken']
-                kwargs['pageToken'] = pageToken
-                wrapper(*args, **kwargs)
-            except:
-                return combined
-        
-        return combined
-    return wrapper
-
+def _paginated(max_pages):
+    def decorate(func):
+        # Memorise responses and return them as a list
+        combined = []
+        page = 0
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            nonlocal page
+            while page < max_pages:
+                response = func(*args, **kwargs)
+                combined.append(response)
+                page += 1
+                try:
+                    pageToken = response['nextPageToken']
+                    kwargs['pageToken'] = pageToken
+                    wrapper(*args, **kwargs)
+                except:
+                    return combined
+            
+            return combined
+        return wrapper
+    return decorate
 class youtube():
     
-    def __init__(self, api_key, maxResults=50) -> None:
+    def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:
         self.api_key = api_key
-        self.maxResults = maxResults
+        self.maxResults = resultsPerPage
+        self.maxPages = maxpages
         
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
@@ -43,7 +45,7 @@ class youtube():
             developerKey=self.api_key)
   
     # Retrieve stats for video specific IDs
-    @_paginated
+    @_paginated(self.maxPages)
     def video_stats(self, id, pageToken=None):
         # Convert to string list
         id = ",".join(id) if isinstance(id, str) else id
@@ -57,7 +59,7 @@ class youtube():
         return request.execute()
 
     # Retrieve list of most popular videos
-    @_paginated
+    @_paginated(self.maxPages)
     def popular(self, videoCategoryId, pageToken=None):
         
         request = self.api.videos().list(
@@ -70,7 +72,7 @@ class youtube():
         return request.execute()
 
     # Retrieve list of video categories
-    @_paginated
+    @_paginated(self.maxPages)
     def VideoCategories(self, regionCode, pageToken=None):
         
         # API videoCategory list request
@@ -83,7 +85,7 @@ class youtube():
         return request.execute()
 
     # Search by category ID
-    @_paginated
+    @_paginated(self.maxPages)
     def category_search(self, categoryId:int, pageToken=None):
         
         request = self.api.search().list(

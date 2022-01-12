@@ -2,7 +2,6 @@ import os
 import googleapiclient.discovery
 import googleapiclient.errors
 from functools import wraps
-from pprint import pprint
 
 
 # Decorator function to expand paginated responses
@@ -77,17 +76,7 @@ class youtube():
             pageToken=pageToken,
             maxResults=self.maxResults
         )
-        response = request.execute()
-        
-        # Return id, title, assignable only
-        categories = []
-        for row in response['items']:
-            categories.append({
-                "id":row['id'],
-                "title":row['snippet']['title'],
-                "assignable":row['snippet']['assignable']
-            })
-        return categories
+        return request.execute()
 
     # Search by category ID
     @_paginated

@@ -4,7 +4,6 @@ import googleapiclient.errors
 from functools import wraps
 from pprint import pprint
 
-# TODO: Make these into a class?
 class youtube():
     
     def __init__(self, api_key) -> None:

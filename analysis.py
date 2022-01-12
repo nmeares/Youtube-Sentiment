@@ -12,10 +12,10 @@ def main():
     
     yt = youtube(DEVELOPER_KEY)
 
-    stats = yt.category_search(youtube, 28)
+    stats = yt.category_search(28)
     ids = helpers.dict_search(stats, "videoId")
     ids = [id['videoId'] for id in ids]
-    stats = yt.video_stats(youtube, ids)
+    stats = yt.video_stats(ids)
     
     pprint(stats)
 

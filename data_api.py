@@ -22,10 +22,10 @@ class youtube():
             api_service_name, api_version, developerKey=key)
 
     # Decorator function to expand paginated responses
-    def _paginated(self, func):
+    def _paginated(func):
         combined = []
         @wraps
-        def wrapper(*args, **kwargs):
+        def wrapper(self, *args, **kwargs):
             response = func(*args, **kwargs)
             combined.append(response)
             pageToken = response['nextPageToken']

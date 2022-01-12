@@ -1,1 +1,0 @@
-CREATE TABLE stats(PRIMARY KEY(stats), view_count)

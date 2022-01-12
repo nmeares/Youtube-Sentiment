@@ -12,7 +12,11 @@ def _paginated(func):
     def wrapper(*args, **kwargs):
         response = func(*args, **kwargs)
         combined.append(response)
-        pageToken = response['nextPageToken']
+        try:
+            pageToken = response['nextPageToken']
+        except:
+            pageToken = None
+        
         kwargs['pageToken'] = pageToken
         while pageToken:
             combined.append(wrapper(*args, **kwargs))

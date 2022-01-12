@@ -25,11 +25,11 @@ def _paginated(func):
 
 class youtube():
     
-    def __init__(self, api_key) -> None:
+    def __init__(self, api_key, maxResults=50) -> None:
         self.api_key = api_key
+        self.maxResults = maxResults
         self.api = self.api_init(self.api_key)
-        self.maxResults = 50
-    
+        
     def api_init(self, key):
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
@@ -52,7 +52,7 @@ class youtube():
             part="statistics",
             id=id,
             pageToken=pageToken,
-            maxResults=50
+            maxResults=self.maxResults
         )
         return request.execute()
 
@@ -65,7 +65,7 @@ class youtube():
             chart="mostPopular",
             videoCategoryId=videoCategoryId,
             pageToken=pageToken,
-            maxResults=50
+            maxResults=self.maxResults
         )
         return request.execute()
 
@@ -78,7 +78,7 @@ class youtube():
             part="snippet",
             regionCode=regionCode,
             pageToken=pageToken,
-            maxResults=50
+            maxResults=self.maxResults
         )
         response = request.execute()
         
@@ -103,6 +103,6 @@ class youtube():
             videoCategoryId=categoryId,
             order="viewCount",
             pageToken=pageToken,
-            maxResults=50
+            maxResults=self.maxResults
         )
         return request.execute()

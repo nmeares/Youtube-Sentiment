@@ -24,7 +24,7 @@ class youtube():
     # Decorator function to expand paginated responses
     def _paginated(func):
         combined = []
-        @wraps
+        @wraps(func)
         def wrapper(*args, **kwargs):
             response = func(*args, **kwargs)
             combined.append(response)

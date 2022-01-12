@@ -8,17 +8,19 @@ from functools import wraps
 def _paginated(func, max_pages=None):
     # Memorise responses and return them as a list
     combined = []
+    page = 0
     @wraps(func)
     def wrapper(*args, **kwargs):
         if page < max_pages:
-        response = func(*args, **kwargs)
-        combined.append(response)
-        try:
-            pageToken = response['nextPageToken']
-            kwargs['pageToken'] = pageToken
-            wrapper(*args, **kwargs)
-        except:
-            return combined
+            response = func(*args, **kwargs)
+            combined.append(response)
+            page += 1
+            try:
+                pageToken = response['nextPageToken']
+                kwargs['pageToken'] = pageToken
+                wrapper(*args, **kwargs)
+            except:
+                return combined
         
         return combined
     return wrapper

@@ -43,7 +43,7 @@ class youtube():
             developerKey=self.api_key)
   
 
-    # Retrieve stats for video specific IDs
+    # Retrieve stats for video specific IDs (max 50)
     @_paginated(2) # Increase paginate in prod
     def video_stats(self, id, pageToken=None):
         # Convert to string list

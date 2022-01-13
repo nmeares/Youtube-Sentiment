@@ -53,3 +53,7 @@ def dict_search(dictionary: dict, search, list_depth=1):
   
     find(dictionary, search)
     return values
+
+def split_list(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]

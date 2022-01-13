@@ -15,6 +15,7 @@ def main():
     top_tech = yt.category_search(28)
     ids = helpers.dict_search(top_tech, "videoId")
     ids = [id['videoId'] for id in ids]
+    
     raw_stats = yt.video_stats(ids)
     
     stats = helpers.dict_search(raw_stats, ["viewCount", "likeCount", "favoriteCount", "commentCount"])

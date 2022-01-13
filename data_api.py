@@ -45,6 +45,7 @@ class youtube():
 
     # Retrieve stats for video specific IDs (max 50)
     def video_stats(self, id, pageToken=None):
+        values = []
         id_lst = [id[i:i + 50] for i in range(0, len(id), 50)]
         for ids in id_lst:
             # Convert to string list
@@ -56,7 +57,8 @@ class youtube():
                 pageToken=pageToken,
                 maxResults=self.maxResults
             )
-            return request.execute()
+            values.append(request.execute())
+        return values
 
     # Retrieve list of most popular videos
     @_paginated(2) # Increase paginate in prod

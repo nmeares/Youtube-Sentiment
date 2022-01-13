@@ -3,7 +3,7 @@ import json
 import sqlite3
 
 from data_api import youtube
-import helpers
+from helpers import dict_search
 
 
 def main():
@@ -14,13 +14,15 @@ def main():
     yt = youtube(DEVELOPER_KEY)
 
     top_tech = yt.category_search(28)
-    ids = helpers.dict_search(top_tech, "videoId")
+    ids = dict_search(top_tech, "videoId")
     ids = [id['videoId'] for id in ids]
     
     raw_stats = yt.video_stats(ids)
     
-    stats = helpers.dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"])
+    stats = dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"])
     
+    raw_categories = yt.VideoCategories('GB')
+    cats = dict_search(raw_categories, ["id", "title", "assignable"])
     with sqlite3.connect('yt_sentiment.db') as conn:
         sql = "INSERT OR REPLACE INTO TABLE \
             categories(category_id, title, assignable, region, time_updated) \
@@ -30,7 +32,7 @@ def main():
         
     
     
-    pprint(stats)
+
 
 
  

@@ -1,5 +1,6 @@
 import pprint
 import json
+import sqlite3
 
 from data_api import youtube
 import helpers
@@ -18,7 +19,11 @@ def main():
     
     raw_stats = yt.video_stats(ids)
     
-    stats = helpers.dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"], list_depth=0)
+    stats = helpers.dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"])
+    
+    with sqlite3.connect('yt_sentiment.db') as conn:
+        
+    
     
     pprint(stats)
 

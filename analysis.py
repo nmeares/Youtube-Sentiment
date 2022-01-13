@@ -23,12 +23,13 @@ def main():
     
     raw_categories = yt.VideoCategories('GB')
     cats = dict_search(raw_categories, ["id", "title", "assignable"])
+    
     with sqlite3.connect('yt_sentiment.db') as conn:
         sql = "INSERT OR REPLACE INTO TABLE \
             categories(category_id, title, assignable, region, time_updated) \
-            VALUES(?, ?, ?, ?, ?)"
+            VALUES(:id, :title, :assignable, ?, ?)"
         
-        conn.execute(sql)
+        conn.executemany(sql, )
         
     
     

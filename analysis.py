@@ -22,7 +22,9 @@ def main():
     stats = helpers.dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"])
     
     with sqlite3.connect('yt_sentiment.db') as conn:
-        sql = "INSERT OR REPLACE INTO TABLE categories(category_id, title, assignable, time_updated) VALUES(?, ?, ?, ?)"
+        sql = "INSERT OR REPLACE INTO TABLE \
+            categories(category_id, title, assignable, region, time_updated) \
+            VALUES(?, ?, ?, ?, ?)"
         
         
     

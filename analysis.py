@@ -26,6 +26,7 @@ def main():
             categories(category_id, title, assignable, region, time_updated) \
             VALUES(?, ?, ?, ?, ?)"
         
+        conn.execute(sql)
         
     
     

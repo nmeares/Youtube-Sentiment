@@ -44,8 +44,9 @@ class youtube():
   
 
     # Retrieve stats for video specific IDs (max 50)
-    @_paginated(2) # Increase paginate in prod
     def video_stats(self, id, pageToken=None):
+        id_lst = [id[i:i + 50] for i in range(0, len(id), 50)]
+        
         # Convert to string list
         id = ",".join(id) if isinstance(id, list) else id
         

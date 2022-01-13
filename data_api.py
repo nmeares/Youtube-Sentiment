@@ -47,7 +47,7 @@ class youtube():
     @_paginated(2) # Increase paginate in prod
     def video_stats(self, id, pageToken=None):
         # Convert to string list
-        id = ",".join(id) if isinstance(id, str) else id
+        id = ",".join(id) if isinstance(id, list) else id
         
         request = self.api.videos().list(
             part="statistics",

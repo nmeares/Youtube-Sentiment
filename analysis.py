@@ -18,7 +18,7 @@ def main():
     
     raw_stats = yt.video_stats(ids)
     
-    stats = helpers.dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"])
+    stats = helpers.dict_search(raw_stats, ["id", "viewCount", "likeCount", "favoriteCount", "commentCount"], list_depth=0)
     
     pprint(stats)
 

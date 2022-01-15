@@ -10,6 +10,7 @@ google-auth-oauthlib = "*"
 google-auth-httplib2 = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.8"

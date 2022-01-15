@@ -1,7 +1,7 @@
 import pprint
 import json
 import sqlite3
-from datetime import date, datetime
+from datetime import datetime
 
 from data_api import youtube
 from helpers import dict_search

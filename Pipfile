@@ -8,6 +8,7 @@ numpy = "*"
 google-api-python-client = "*"
 google-auth-oauthlib = "*"
 google-auth-httplib2 = "*"
+python-decouple = "*"
 
 [dev-packages]
 ipykernel = "*"

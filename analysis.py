@@ -24,7 +24,7 @@ def main():
         cat['time_updated'] = dt
     
     with sqlite3.connect('yt_sentiment.db') as conn:
-        sql = "INSERT OR REPLACE INTO TABLE \
+        sql = "INSERT OR REPLACE INTO \
             categories(category_id, title, assignable, region, time_updated) \
             VALUES(:id, :title, :assignable, :region, :time_updated)"
         

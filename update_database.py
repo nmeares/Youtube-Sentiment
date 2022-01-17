@@ -14,8 +14,6 @@ class yt_database():
         self.db = db
         try:
             self.DEVELOPER_KEY = config('YT_API_KEY')
-            print("Successfully imported key")
-            
         except KeyError:
             print("Unable to find API key environment variable!")
         self.yt = youtube(self.DEVELOPER_KEY)

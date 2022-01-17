@@ -9,7 +9,9 @@ from helpers import dict_search
 
 class yt_database():
 
-    def __init__(self):
+    def __init__(self, db='yt_sentiment.db'):
+        
+        self.db = db
         try:
             self.DEVELOPER_KEY = config('YT_API_KEY')
             print("Successfully imported key")
@@ -30,7 +32,7 @@ class yt_database():
             cat['time_updated'] = dt
 
         try: 
-            with sqlite3.connect('yt_sentiment.db') as conn:
+            with sqlite3.connect(self.db) as conn:
                 sql = "INSERT OR REPLACE INTO \
                     categories(category_id, title, assignable, region, time_updated) \
                     VALUES(:id, :title, :assignable, :region, :time_updated)"

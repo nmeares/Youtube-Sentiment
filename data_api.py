@@ -46,7 +46,9 @@ class youtube():
     # Retrieve stats for video specific IDs (max 50)
     def video_stats(self, id, pageToken=None):
         values = []
+        # Chunk the list by 50 to remain within query limits
         id_lst = [id[i:i + 50] for i in range(0, len(id), 50)]
+        # Loop chunked list
         for ids in id_lst:
             # Convert to string list
             id = ",".join(ids) if isinstance(ids, list) else ids

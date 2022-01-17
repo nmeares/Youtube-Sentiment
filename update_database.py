@@ -1,0 +1,47 @@
+from decouple import config
+import sqlite3
+import os
+from datetime import datetime
+
+from data_api import youtube
+from helpers import dict_search
+
+
+class yt_database():
+
+    def __init__(self):
+        try:
+            self.DEVELOPER_KEY = config('YT_API_KEY')
+            print("Successfully imported key")
+            
+        except KeyError:
+            print("Unable to find API key environment variable!")
+            
+        self.yt = youtube(self.DEVELOPER_KEY)
+            
+    def update_categories(self):
+        dt = datetime.now()
+
+        raw_categories = self.yt.VideoCategories('GB')
+        categories = dict_search(raw_categories, ["id", "title", "assignable"])
+            
+        for cat in categories:
+            cat['region'] = 'GB'
+            cat['time_updated'] = dt
+
+        try: 
+            with sqlite3.connect('yt_sentiment.db') as conn:
+                sql = "INSERT OR REPLACE INTO \
+                    categories(category_id, title, assignable, region, time_updated) \
+                    VALUES(:id, :title, :assignable, :region, :time_updated)"
+                conn.executemany(sql, categories)
+                print("Categories table updated successfully!")
+                
+        except sqlite3.Error as error:
+            print("Error while creating a sqlite table", error)   
+    
+    
+    
+    
+    
+    

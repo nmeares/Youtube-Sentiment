@@ -10,8 +10,7 @@ from helpers import dict_search
 class yt_database():
 
     def __init__(self, db='yt_sentiment.db'):
-        
-        self.db = db
+        self.db = db if os.path.exists(db) else print(f"{db} does not exist! Please create and re-run.")
         try:
             self.DEVELOPER_KEY = config('YT_API_KEY')
         except KeyError:

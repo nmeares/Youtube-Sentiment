@@ -27,10 +27,10 @@ def _paginated(max_pages):
     return decorate
 class youtube():
     
-    def __init__(self, api_key, resultsPerPage=50, maxpages=1000) -> None:
+    def __init__(self, api_key, resultsPerPage=50, maxPages=1000) -> None:
         self.api_key = api_key
         self.maxResults = resultsPerPage
-        self.maxPages = maxpages
+        self.maxPages = maxPages
         
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.

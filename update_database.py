@@ -15,7 +15,7 @@ class yt_database():
         try:
             self.DEVELOPER_KEY = config('YT_API_KEY')
         except KeyError:
-            print("Unable to find API key environment variable!")
+            print(f"Unable to find API key in .env file when initiating {self.__name__} object!")
         self.yt = youtube(self.DEVELOPER_KEY)
             
     def update_categories(self):

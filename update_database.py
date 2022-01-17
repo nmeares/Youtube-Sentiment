@@ -27,7 +27,7 @@ class yt_database():
             cat['region'] = 'GB'
             cat['time_updated'] = dt
 
-        try: 
+        try:
             with sqlite3.connect(self.db) as conn:
                 sql = "INSERT OR REPLACE INTO \
                     categories(category_id, title, assignable, region, time_updated) \
@@ -38,7 +38,8 @@ class yt_database():
         except sqlite3.Error as error:
             print("Error while creating a sqlite table", error)   
     
-    
+    def _insert_or_replace(self):
+        
     
     
     

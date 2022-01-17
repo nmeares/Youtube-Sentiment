@@ -27,21 +27,21 @@ class yt_database():
             cat['region'] = 'GB'
             cat['time_updated'] = dt
 
-        self._insert_or_replace(categories)  
+        self._insert_or_replace("categories", categories)  
     
-    def _insert_or_replace(self, dictionary:dict):
+    def _insert_or_replace(self, table, dictionary:dict):
         keys = dictionary.keys()
         values = [f":{key}" for key in dictionary.keys()]
         try:
             with sqlite3.connect(self.db) as conn:
                 sql = f"INSERT OR REPLACE INTO \
-                    categories({keys}) \
+                    {table}({keys}) \
                     VALUES({values})"
                 conn.executemany(sql, dictionary)
-                print("Categories table updated successfully!")
+                print(f"{table} table updated successfully!")
                 
         except sqlite3.Error as error:
-            print("Error while creating a sqlite table", error)
+            print(f"Error while updating a {table} table", error)
     
     
     

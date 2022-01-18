@@ -93,7 +93,7 @@ class youtube():
         Parameters
         ----------
         categoryId : int
-            [description]
+            ID relating to a particular video category 
         order : str, optional
             string list accepts 'date' 'rating' 'relevance' 'title' 'videoCount' 'viewCount', by default "relevance"
         pageToken : str, optional
@@ -101,8 +101,8 @@ class youtube():
 
         Returns
         -------
-        [type]
-            [description]
+        list
+            returns a list of dictionaries
         '''
         request = self.api.search().list(
             part="snippet",

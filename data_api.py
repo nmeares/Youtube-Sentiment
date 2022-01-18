@@ -120,3 +120,21 @@ class youtube():
             maxResults=self.maxResults
         )
         return request.execute()
+    
+    def commentThread(self, videoId, part="snippet", pageToken=None):
+        values = []
+        # Chunk the list by 50 to remain within query limits
+        id_lst = [videoId[i:i + 50] for i in range(0, len(videoId), 50)]
+        
+        for ids in id_lst:
+            # Convert to string list
+            id = ",".join(ids) if isinstance(ids, list) else ids
+            
+            request = self.api.commentThreads().list(
+                part=part,
+                id=id,
+                pageToken=pageToken,
+                maxResults=self.maxResults
+            )
+            values.append(request.execute())
+        return values

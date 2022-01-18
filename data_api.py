@@ -23,7 +23,7 @@ def _paginated(max_pages):
                 except:
                     return combined
             return combined
-        return wrapper
+        return wrapper 
     return decorate
 class youtube():
     

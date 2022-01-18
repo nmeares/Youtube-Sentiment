@@ -3,28 +3,34 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from functools import wraps
 
+
 # Decorator function to expand paginated responses
 def _paginated(max_pages):
-    def decorate(func):
-        # Memorise responses and return them as a list
-        combined = []
-        page = 1
+    def decorate(func, combined=[], page = 1):
+        # Function wrapper
+        # Recursively runs wrapped function while amending pageToken until max page limit reached
         @wraps(func)
         def wrapper(*args, **kwargs):
             nonlocal page
-            while page <= max_pages:
-                response = func(*args, **kwargs)
+            while page <= max_pages: 
+                response = func(*args, **kwargs) # Execute wrapped function
                 combined.append(response)
-                page += 1
+                page += 1 # Increment page count
                 try:
                     pageToken = response['nextPageToken']
                     kwargs['pageToken'] = pageToken
-                    wrapper(*args, **kwargs)
+                    wrapper(*args, **kwargs) # Recursion of wrapped function
                 except:
-                    return combined
-            return combined
-        return wrapper 
+                    return
+            # Set reponse equal to copy of combined and clear combined to clear memory.     
+            response = combined.copy()
+            combined.clear()
+            # Reset page count
+            page = 1
+            return response
+        return wrapper
     return decorate
+
 class youtube():
     
     def __init__(self, api_key, resultsPerPage=50, maxPages=1000) -> None:

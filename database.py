@@ -6,14 +6,13 @@ from datetime import datetime
 from data_api import youtube
 from helpers import dict_search
 
-
 class yt_sentiment():
 
     def __init__(self, db='yt_sentiment.db'):
         self.db = db if os.path.exists(db) else print(f"{db} does not exist! Please create and re-run.")
         try:
             self.DEVELOPER_KEY = config('YT_API_KEY')
-        except KeyError:
+        except:
             print(f"Unable to find API key in .env file when initiating {self.__name__} object!")
         self.yt = youtube(self.DEVELOPER_KEY)
             
@@ -46,7 +45,5 @@ class yt_sentiment():
                 
         except sqlite3.Error as error:
             print(f"Error while updating a {table} table. ERROR:", error)
-    
-    
-yt_sentiment().update_categories()
+
     

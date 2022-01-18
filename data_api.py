@@ -107,8 +107,8 @@ class youtube():
         request = self.api.search().list(
             part="snippet",
             type="video",
-            videoCategoryId=categoryId,
             q=search_term,
+            videoCategoryId=categoryId,
             order=order,
             pageToken=pageToken,
             maxResults=self.maxResults

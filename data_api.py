@@ -88,7 +88,22 @@ class youtube():
     # Search by category ID
     @_paginated(2) # Increase paginate in prod
     def category_search(self, categoryId:int, order="relevance", pageToken=None):
-        
+        '''Search by Category ID
+
+        Parameters
+        ----------
+        categoryId : int
+            [description]
+        order : str, optional
+            string list accepts 'date' 'rating' 'relevance' 'title' 'videoCount' 'viewCount', by default "relevance"
+        pageToken : str, optional
+            parameter used by paginate decorator to loop through pages and gather results, by default None
+
+        Returns
+        -------
+        [type]
+            [description]
+        '''
         request = self.api.search().list(
             part="snippet",
             type="video",

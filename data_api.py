@@ -87,7 +87,7 @@ class youtube():
 
     # Search by category ID
     @_paginated(2) # Increase paginate in prod
-    def category_search(self, categoryId:int, order="relevance", pageToken=None):
+    def category_search(self, categoryId:int, search_term=None, order="relevance", pageToken=None):
         '''Search by Category ID
 
         Parameters
@@ -108,6 +108,7 @@ class youtube():
             part="snippet",
             type="video",
             videoCategoryId=categoryId,
+            q=search_term,
             order=order,
             pageToken=pageToken,
             maxResults=self.maxResults

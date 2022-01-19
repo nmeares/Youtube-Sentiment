@@ -3,7 +3,7 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from helpers import paginated, chunked_list
 
-PAGE_LIMIT = 2
+PAGE_LIMIT = 2 # To prevent exhausting api call budget whilst testing
 
 class youtube():
     

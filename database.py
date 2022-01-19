@@ -15,15 +15,16 @@ class yt_sentiment():
         except:
             print(f"Unable to find API key in .env file when initiating {self.__name__} object!")
         self.yt = youtube(self.DEVELOPER_KEY)
-            
-    def update_categories(self):
+    
+    # Update categories for a specific region        
+    def update_categories(self, region):
         dt = datetime.now()
 
-        raw_categories = self.yt.VideoCategories('GB')
+        raw_categories = self.yt.VideoCategories(region)
         categories = dict_search(raw_categories, ["id", "title", "assignable"])
             
         for cat in categories:
-            cat['region'] = 'GB'
+            cat['region'] = region
             cat['time_updated'] = dt
             # re-name 'id' key to 'categories_id' 
             cat['category_id'] = cat.pop('id')

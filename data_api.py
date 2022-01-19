@@ -1,35 +1,7 @@
 import os
 import googleapiclient.discovery
 import googleapiclient.errors
-from functools import wraps
-
-
-# Decorator function to expand paginated responses
-def _paginated(max_pages):
-    def decorate(func, combined=[], page = 1):
-        # Function wrapper
-        # Recursively runs wrapped function while amending pageToken until max page limit reached
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            nonlocal page
-            while page <= max_pages: 
-                response = func(*args, **kwargs) # Execute wrapped function
-                combined.append(response)
-                page += 1 # Increment page count
-                try:
-                    pageToken = response['nextPageToken']
-                    kwargs['pageToken'] = pageToken
-                    wrapper(*args, **kwargs) # Recursion of wrapped function
-                except:
-                    return
-            # Set reponse equal to copy of combined and clear combined to clear memory.     
-            response = combined.copy()
-            combined.clear()
-            # Reset page count
-            page = 1
-            return response
-        return wrapper
-    return decorate
+from helpers import paginated
 
 class youtube():
     
@@ -48,9 +20,8 @@ class youtube():
             self.api_version, 
             developerKey=self.api_key)
   
-
     # Retrieve stats for video specific IDs (max 50)
-    def video_stats(self, id, pageToken=None):
+    def video_stats(self, id):
         values = []
         # Chunk the list by 50 to remain within query limits
         id_lst = [id[i:i + 50] for i in range(0, len(id), 50)]
@@ -62,14 +33,13 @@ class youtube():
             request = self.api.videos().list(
                 part="statistics",
                 id=id,
-                pageToken=pageToken,
                 maxResults=self.maxResults
             )
             values.append(request.execute())
         return values
 
+    @paginated(2)
     # Retrieve list of most popular videos
-    @_paginated(2) # Increase paginate in prod
     def popular(self, videoCategoryId, pageToken=None):
         
         request = self.api.videos().list(
@@ -91,8 +61,8 @@ class youtube():
         )
         return request.execute()
 
+    @paginated(2)
     # Search by category ID
-    @_paginated(2) # Increase paginate in prod
     def category_search(self, categoryId:int, search_term=None, order="relevance", pageToken=None):
         '''Search by Category ID
 
@@ -108,7 +78,7 @@ class youtube():
         Returns
         -------
         list
-            returns a list of dictionaries
+            returns a list of response dictionaries
         '''
         request = self.api.search().list(
             part="snippet",
@@ -121,7 +91,23 @@ class youtube():
         )
         return request.execute()
     
-    def commentThread(self, videoId, part="snippet", pageToken=None):
+    def commentThread(self, videoId: str, part="snippet", pageToken=None):
+        '''Retrieve comment thread for specific video ID(s)
+
+        Parameters
+        ----------
+        videoId : str, list
+            Unique video ID string, or list of strings
+        part : str, optional
+            response type (accepts 'snippet,' 'id,' 'replies'), by default "snippet"
+        pageToken : str, optional
+            parameter used by paginate decorator to loop through pages and gather results, by default None
+
+        Returns
+        -------
+        list
+            returns a list of response dictionaries
+        '''
         values = []
         # Chunk the list by 50 to remain within query limits
         id_lst = [videoId[i:i + 50] for i in range(0, len(videoId), 50)]

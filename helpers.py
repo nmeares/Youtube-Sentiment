@@ -1,4 +1,4 @@
-
+from functools import wraps
 
 # Nested dictionary search function 
 def dict_search(dictionary: dict, search, list_depth=1):
@@ -53,3 +53,33 @@ def dict_search(dictionary: dict, search, list_depth=1):
   
     find(dictionary, search)
     return values
+
+
+# Decorator function to expand paginated responses
+def paginated(max_pages):
+    def decorate(func, combined=[], page = 1):
+        # Function wrapper
+        # Recursively runs wrapped function while amending pageToken until max page limit reached
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            nonlocal page
+            try:
+                while page <= max_pages:
+                    try:
+                        # Run api function, increment page count and append next page token to kwargs
+                        response = func(*args, **kwargs) # Execute wrapped function
+                        combined.append(response)
+                        page += 1
+                        kwargs['pageToken'] = response['nextPageToken']
+                    except:
+                        return response
+                    finally:
+                        # Reset combined cache and page count
+                        combined.clear()
+                        page = 1
+            finally:
+                # Reset combined cache and page count
+                combined.clear()
+                page = 1
+        return wrapper
+    return decorate

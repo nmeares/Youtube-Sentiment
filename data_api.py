@@ -3,6 +3,8 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from helpers import paginated, chunked_list
 
+PAGE_LIMIT = 2
+
 class youtube():
     
     def __init__(self, api_key, resultsPerPage=50, maxPages=1000) -> None:
@@ -38,7 +40,7 @@ class youtube():
             values.append(request.execute())
         return values
 
-    @paginated(2)
+    @paginated(PAGE_LIMIT)
     # Retrieve list of most popular videos
     def popular(self, videoCategoryId, pageToken=None):
         
@@ -61,7 +63,7 @@ class youtube():
         )
         return request.execute()
 
-    @paginated(2)
+    @paginated(PAGE_LIMIT)
     # Search by category ID
     def category_search(self, categoryId:int, search_term=None, order="relevance", pageToken=None):
         '''Search by Category ID

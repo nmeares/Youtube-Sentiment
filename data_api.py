@@ -124,3 +124,37 @@ class youtube():
             )
             values.append(request.execute())
         return values
+    
+    def comment(self, commentId: str, part="snippet", pageToken=None):
+        '''Retrieve information for specific comment ID(s)
+
+        Parameters
+        ----------
+        videoId : str, list
+            Unique video ID string, or list of strings
+        part : str, optional
+            response type (accepts 'snippet,' 'id,'), by default "snippet"
+        pageToken : str, optional
+            parameter used by paginate decorator to loop through pages and gather results, by default None
+
+        Returns
+        -------
+        list
+            returns a list of response dictionaries
+        '''
+        values = []
+        # Chunk the list by 50 to remain within query limits
+        id_lst = [commentId[i:i + 50] for i in range(0, len(commentId), 50)]
+        
+        for ids in id_lst:
+            # Convert to string list
+            id = ",".join(ids) if isinstance(ids, list) else ids
+            
+            request = self.api.comment().list(
+                part=part,
+                id=id,
+                pageToken=pageToken,
+                maxResults=self.maxResults
+            )
+            values.append(request.execute())
+        return values

@@ -1,7 +1,7 @@
 import os
 import googleapiclient.discovery
 import googleapiclient.errors
-from helpers import paginated
+from helpers import paginated, chunked_list
 
 class youtube():
     
@@ -24,7 +24,7 @@ class youtube():
     def video_stats(self, id):
         values = []
         # Chunk the list by 50 to remain within query limits
-        id_lst = [id[i:i + 50] for i in range(0, len(id), 50)]
+        id_lst = chunked_list(id, 50)
         # Loop chunked list
         for ids in id_lst:
             # Convert to string list
@@ -110,7 +110,7 @@ class youtube():
         '''
         values = []
         # Chunk the list by 50 to remain within query limits
-        id_lst = [videoId[i:i + 50] for i in range(0, len(videoId), 50)]
+        id_lst = chunked_list(videoId, 50)
         
         for ids in id_lst:
             # Convert to string list
@@ -144,7 +144,7 @@ class youtube():
         '''
         values = []
         # Chunk the list by 50 to remain within query limits
-        id_lst = [commentId[i:i + 50] for i in range(0, len(commentId), 50)]
+        id_lst = chunked_list(commentId, 50)
         
         for ids in id_lst:
             # Convert to string list

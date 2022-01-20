@@ -46,8 +46,10 @@ class youtube():
     def popular(self, videoCategoryId, pageToken=None):
 
         request = self.api.videos().list(
+
             part="snippet",
             chart="mostPopular",
+            h1="en",
             videoCategoryId=videoCategoryId,
             pageToken=pageToken,
             maxResults=self.maxResults

@@ -124,7 +124,7 @@ class youtube():
                 pageToken=pageToken,
                 maxResults=self.maxResults
             ).execute()
-            values.extend(dict_search(request, returns))
+            values.extend(dict_search(request, returns, list_depth=2))
         return values
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

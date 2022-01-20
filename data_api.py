@@ -48,8 +48,8 @@ class youtube():
             request = self.api.videos().list(
                 part="snippet",
                 chart="mostPopular",
-                regionCode=regionCode,
                 videoCategoryId=videoCategoryId,
+                regionCode=regionCode,
                 pageToken=pageToken,
                 maxResults=self.maxResults
                 ).execute()

@@ -126,8 +126,10 @@ class youtube():
                     maxResults=self.maxResults
                 ).execute()
                 values.append(request)
+            except googleapiclient.errors.HttpError as error:
+                values.append({id:error.error_details[0]['reason']})
             except Exception as error:
-                print(f"Error with videoId {id}: {error}")
+                print(f"Error on videoId {id}: {error}")
         return values
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

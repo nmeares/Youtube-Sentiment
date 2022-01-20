@@ -45,9 +45,9 @@ def dict_search(dictionary: dict, search, list_depth=1):
                     find(value, search)
         # If list, loop through list items and run find
         elif isinstance(d, list):
+            dict_search.list_depth = + 1
             for i in range(0, len(d)):
                 # Increment list depth by one to keep track of depth
-                dict_search.list_depth = + 1
                 find(d[i], search)
                 # Apend temp dict at list depth specified by user
                 if dict_search.list_depth == list_depth:

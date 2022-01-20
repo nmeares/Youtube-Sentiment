@@ -71,7 +71,10 @@ def paginated(max_pages):
                     try:
                         # Run api function, increment page count and append next page token to kwargs
                         # Execute wrapped function
-                        response = func(*args, **kwargs)
+                        try:
+                            response = func(*args, **kwargs)
+                        except:
+                            raise
                         combined.append(response)
                         page += 1
                         kwargs['pageToken'] = response['nextPageToken']

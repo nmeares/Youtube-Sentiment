@@ -69,7 +69,7 @@ class youtube():
 
     @paginated(PAGE_LIMIT)
     # Search by category ID
-    def category_search(self, categoryId: int, search_term=None, order="relevance", pageToken=None):
+    def category_search(self, categoryId: int, search_term=None, order="relevance", regionCode=None, pageToken=None):
         '''Search by Category ID
 
         Parameters
@@ -91,6 +91,7 @@ class youtube():
             type="video",
             q=search_term,
             videoCategoryId=categoryId,
+            regionCode=regionCode,
             order=order,
             pageToken=pageToken,
             maxResults=self.maxResults

@@ -3,25 +3,26 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from helpers import paginated, chunked_list
 
-PAGE_LIMIT = 2 # To prevent exhausting api call budget whilst testing
+PAGE_LIMIT = 2  # To prevent exhausting api call budget whilst testing
+
 
 class youtube():
-    
+
     def __init__(self, api_key, resultsPerPage=50, maxPages=1000) -> None:
         self.api_key = api_key
         self.maxResults = resultsPerPage
         self.maxPages = maxPages
-        
+
         # Disable OAuthlib's HTTPS verification when running locally.
         # *DO NOT* leave this option enabled in production.
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
         self.api_service_name = "youtube"
         self.api_version = "v3"
         self.api = googleapiclient.discovery.build(
-            self.api_service_name, 
-            self.api_version, 
+            self.api_service_name,
+            self.api_version,
             developerKey=self.api_key)
-  
+
     # Retrieve stats for video specific IDs (max 50)
     def video_stats(self, id):
         values = []
@@ -31,7 +32,7 @@ class youtube():
         for ids in id_lst:
             # Convert to string list
             id = ",".join(ids) if isinstance(ids, list) else ids
-            
+
             request = self.api.videos().list(
                 part="statistics",
                 id=id,
@@ -43,7 +44,7 @@ class youtube():
     @paginated(PAGE_LIMIT)
     # Retrieve list of most popular videos
     def popular(self, videoCategoryId, pageToken=None):
-        
+
         request = self.api.videos().list(
             part="snippet",
             chart="mostPopular",
@@ -55,7 +56,7 @@ class youtube():
 
     # Retrieve list of video categories
     def VideoCategories(self, regionCode):
-        
+
         # API videoCategory list request
         request = self.api.videoCategories().list(
             part="snippet",
@@ -65,7 +66,7 @@ class youtube():
 
     @paginated(PAGE_LIMIT)
     # Search by category ID
-    def category_search(self, categoryId:int, search_term=None, order="relevance", pageToken=None):
+    def category_search(self, categoryId: int, search_term=None, order="relevance", pageToken=None):
         '''Search by Category ID
 
         Parameters
@@ -92,7 +93,7 @@ class youtube():
             maxResults=self.maxResults
         )
         return request.execute()
-    
+
     def commentThread(self, videoId: str, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 
@@ -113,11 +114,11 @@ class youtube():
         values = []
         # Chunk the list by 50 to remain within query limits
         id_lst = chunked_list(videoId, 50)
-        
+
         for ids in id_lst:
             # Convert to string list
             id = ",".join(ids) if isinstance(ids, list) else ids
-            
+
             request = self.api.commentThreads().list(
                 part=part,
                 id=id,
@@ -126,7 +127,7 @@ class youtube():
             )
             values.append(request.execute())
         return values
-    
+
     def comment(self, commentId: str, part="snippet", pageToken=None):
         '''Retrieve information for specific comment ID(s)
 
@@ -147,11 +148,11 @@ class youtube():
         values = []
         # Chunk the list by 50 to remain within query limits
         id_lst = chunked_list(commentId, 50)
-        
+
         for ids in id_lst:
             # Convert to string list
             id = ",".join(ids) if isinstance(ids, list) else ids
-            
+
             request = self.api.comment().list(
                 part=part,
                 id=id,

@@ -34,7 +34,7 @@ class youtube():
             id = ",".join(ids) if isinstance(ids, list) else ids
 
             request = self.api.videos().list(
-                part="statistics",
+                part="snippet, statistics",
                 id=id,
                 maxResults=self.maxResults
             )

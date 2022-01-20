@@ -125,7 +125,7 @@ class youtube():
 
             request = self.api.commentThreads().list(
                 part=part,
-                id=id,
+                videoId=id,
                 pageToken=pageToken,
                 maxResults=self.maxResults
             )

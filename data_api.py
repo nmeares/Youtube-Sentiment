@@ -55,7 +55,7 @@ class youtube():
                 ).execute()
             return request
         except Exception as error:
-            print(error)
+            print(f"Error when requesting popular: {error}")
 
     # Retrieve list of video categories
     def VideoCategories(self, regionCode):

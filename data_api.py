@@ -54,7 +54,7 @@ class youtube():
                 maxResults=self.maxResults
                 ).execute()
             return request
-        except googleapiclient.errors as error:
+        except googleapiclient.errors.Error as error:
             print (error)
 
     # Retrieve list of video categories

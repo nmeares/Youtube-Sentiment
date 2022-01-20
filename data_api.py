@@ -98,7 +98,7 @@ class youtube():
         )
         return request.execute()
 
-    def commentThread(self, videoId, part="snippet", pageToken=None):
+    def commentThread(self, videoId, part="snippet", pageToken=None, returns=["id", "displayText"]):
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters
@@ -115,13 +115,12 @@ class youtube():
         dict
             returns a dict
         '''
-        
         videoIds = [videoId] if isinstance(videoId, str) else videoId
         
         for id in videoIds:
             request = self.api.commentThreads().list(
                 part=part,
-                videoId=videoId,
+                videoId=id,
                 pageToken=pageToken,
                 maxResults=self.maxResults
             ).execute()

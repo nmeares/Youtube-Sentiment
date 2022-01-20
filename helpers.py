@@ -74,7 +74,7 @@ def paginated(max_pages):
                         try:
                             response = func(*args, **kwargs)
                         except Exception as e:
-                            raise e
+                            print(e)
                         combined.append(response)
                         page += 1
                         kwargs['pageToken'] = response['nextPageToken']

@@ -126,8 +126,8 @@ class youtube():
                     maxResults=self.maxResults
                 ).execute()
                 values.append(request)
-            except:
-                pass
+            except Exception as error:
+                print(f"Error with videoId {id}: {error}")
         return values
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

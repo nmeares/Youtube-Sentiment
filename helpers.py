@@ -64,6 +64,7 @@ def paginated(max_pages):
         def wrapper(*args, **kwargs):
             nonlocal page
             try:
+                # Loop pages
                 while page <= max_pages:
                     try:
                         # Run api function, increment page count and append next page token to kwargs
@@ -73,7 +74,7 @@ def paginated(max_pages):
                         kwargs['pageToken'] = response['nextPageToken']
                     except:
                         break
-                response = combined.copy()
+                response = combined.copy() # Create copy so cache can be cleared for next query
                 return response
             finally:
                 # Reset combined cache and page count

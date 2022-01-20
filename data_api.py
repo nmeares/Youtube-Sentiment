@@ -115,12 +115,17 @@ class youtube():
         dict
             returns a dict
         '''
-        request = self.api.commentThreads().list(
-            part=part,
-            videoId=videoId,
-            pageToken=pageToken,
-            maxResults=self.maxResults
-        ).execute()
+        
+        videoIds = [videoId] if isinstance(videoId, str) else videoId
+        
+        for id in videoIds:
+            request = self.api.commentThreads().list(
+                part=part,
+                videoId=videoId,
+                pageToken=pageToken,
+                maxResults=self.maxResults
+            ).execute()
+            
         return request
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

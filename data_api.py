@@ -54,8 +54,8 @@ class youtube():
             videoCategoryId=videoCategoryId,
             pageToken=pageToken,
             maxResults=self.maxResults
-        )
-        return request.execute()
+        ).execute()
+        return request
 
     # Retrieve list of video categories
     def VideoCategories(self, regionCode):

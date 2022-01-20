@@ -49,11 +49,10 @@ class youtube():
             part="snippet",
             chart="mostPopular",
             h1="en",
-            regionCode=regionCode,
             videoCategoryId=videoCategoryId,
             pageToken=pageToken,
             maxResults=self.maxResults
-        ).execute()
+            ).execute()
         return request
 
     # Retrieve list of video categories

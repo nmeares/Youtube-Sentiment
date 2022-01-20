@@ -103,8 +103,8 @@ class youtube():
 
         Parameters
         ----------
-        videoId : str, list
-            Unique video ID string, or list of strings
+        videoId : str
+            Unique video ID string
         part : str, optional
             response type (accepts 'snippet,' 'id,' 'replies'), by default "snippet"
         pageToken : str, optional
@@ -112,25 +112,16 @@ class youtube():
 
         Returns
         -------
-        list
-            returns a list of response dictionaries
+        dict
+            returns a dict
         '''
-        values = []
-        # Chunk the list by 50 to remain within query limits
-        id_lst = chunked_list(videoId, 50)
-
-        for ids in id_lst:
-            # Convert to string list
-            id = ",".join(ids) if isinstance(ids, list) else ids
-
-            request = self.api.commentThreads().list(
-                part=part,
-                videoId=id,
-                pageToken=pageToken,
-                maxResults=self.maxResults
-            )
-            values.append(request.execute())
-        return values
+        request = self.api.commentThreads().list(
+            part=part,
+            videoId=videoId,
+            pageToken=pageToken,
+            maxResults=self.maxResults
+        ).execute()
+        return request
 
     def comment(self, commentId: str, part="snippet", pageToken=None):
         '''Retrieve information for specific comment ID(s)

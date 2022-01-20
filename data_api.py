@@ -118,13 +118,16 @@ class youtube():
         videoIds = [videoId] if isinstance(videoId, str) else videoId
         values = []
         for id in videoIds:
-            request = self.api.commentThreads().list(
-                part=part,
-                videoId=id,
-                pageToken=pageToken,
-                maxResults=self.maxResults
-            ).execute()
-            values.append(request)
+            try:
+                request = self.api.commentThreads().list(
+                    part=part,
+                    videoId=id,
+                    pageToken=pageToken,
+                    maxResults=self.maxResults
+                ).execute()
+                values.append(request)
+            except:
+                pass
         return values
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

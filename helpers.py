@@ -64,12 +64,12 @@ def paginated(max_pages):
         def wrapper(*args, **kwargs):
             nonlocal page
             try:
-                for i in range(0,max_pages):
+                while page <= max_pages:
                     try:
                         # Run api function, increment page count and append next page token to kwargs
                         response = func(*args, **kwargs) # Execute wrapped function
                         combined.append(response)
-                        i += 1
+                        page += 1
                         kwargs['pageToken'] = response['nextPageToken']
                     except:
                         break

@@ -43,13 +43,14 @@ class youtube():
 
     @paginated(PAGE_LIMIT)
     # Retrieve list of most popular videos
-    def popular(self, videoCategoryId, pageToken=None):
+    def popular(self, videoCategoryId, regionCode, pageToken=None):
 
         request = self.api.videos().list(
 
             part="snippet",
             chart="mostPopular",
             h1="en",
+            regionCode=regionCode,
             videoCategoryId=videoCategoryId,
             pageToken=pageToken,
             maxResults=self.maxResults

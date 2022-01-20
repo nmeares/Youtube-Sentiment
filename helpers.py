@@ -73,10 +73,6 @@ def paginated(max_pages):
                         kwargs['pageToken'] = response['nextPageToken']
                     except:
                         return combined
-                    finally:
-                        # Reset combined cache and page count
-                        combined.clear()
-                        page = 1
             finally:
                 # Reset combined cache and page count
                 combined.clear()

@@ -52,7 +52,7 @@ def dict_search(dictionary: dict, search, list_depth=1):
                 # Apend temp dict at list depth specified by user
                 if dict_search.list_depth == list_depth:
                     values.append(temp.copy())
-
+            dict_search.list_depth -= 1
     find(dictionary, search)
     return values
 

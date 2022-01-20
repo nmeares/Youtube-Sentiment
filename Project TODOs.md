@@ -1,0 +1,13 @@
+# NLP Project Notes
+
+## TODO
+
+- [ ] Add filter capability to API methods (use of dict search)
+- [ ] Ability to add comments to row in dataframe
+- [ ] run textblob on comments for each video to guage sentiment
+- [ ] assess/ provide channel popularity so sentiment can be weighted
+- [ ] Weight sentiment score by view/like ratio, view/comment ratio, channel popularity
+- [ ] Overall sentiment score for search term using agregated sentiment and number of new videos relating to it over a certain period of time
+
+
+

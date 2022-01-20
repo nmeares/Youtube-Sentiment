@@ -48,7 +48,7 @@ class youtube():
             request = self.api.videos().list(
                 part="snippet",
                 chart="mostPopular",
-                h1="en",
+                regionCode=regionCode,
                 videoCategoryId=videoCategoryId,
                 pageToken=pageToken,
                 maxResults=self.maxResults

@@ -1,7 +1,7 @@
 import os
 import googleapiclient.discovery
 import googleapiclient.errors
-from helpers import dict_search, paginated, chunked_list
+from helpers import paginated, chunked_list
 
 PAGE_LIMIT = 2  # To prevent exhausting api call budget whilst testing
 
@@ -98,7 +98,7 @@ class youtube():
         )
         return request.execute()
 
-    def commentThread(self, videoId, part="snippet", pageToken=None, returns=["videoId", "displayText"]):
+    def commentThread(self, videoId, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters
@@ -124,7 +124,7 @@ class youtube():
                 pageToken=pageToken,
                 maxResults=self.maxResults
             ).execute()
-            values.extend(dict_search(request, returns, list_depth=2))
+            values.append(request)
         return values
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

@@ -55,6 +55,7 @@ class youtube():
                 ).execute()
             return request
         except googleapiclient.errors.Error as error:
+            error = error
             print (error)
 
     # Retrieve list of video categories

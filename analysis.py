@@ -9,19 +9,19 @@ class sentiment():
         self.text = text
         self.nlp = spacy.load('en_core_web_sm')
         self.doc = self.nlp(self.text)
-        self.tokens = self._tokenise(self.doc)
-        self.filtered = self._dropwords(self.tokens)
+        self.tokens = self._tokenise()
+        self.filtered = self._dropwords()
         self.polarity = self._polarity()
         
-    def _tokenise(self, doc: object):
+    def _tokenise(self):
         token_list = []
-        for token in doc:
-            token_list.append(doc.text)
+        for token in self.doc:
+            token_list.append(token.text)
         return token_list
     
-    def _dropwords(self, tokenised_list: list):
+    def _dropwords(self):
         filtered = []
-        for word in tokenised_list:
+        for word in self.tokens:
             lex = self.nlp.vocab[word]
             if lex.is_stop == False:
                 filtered.append(word)

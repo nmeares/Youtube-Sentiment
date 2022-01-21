@@ -9,10 +9,11 @@ class sentiment():
         self.text = text
         self.nlp = spacy.load('en_core_web_sm')
         self.doc = self.nlp(self.text)
+        self.tokens = self.tokenise(self.doc)
         
 
-def tokenise(doc: object):
-    token_list = []
-    for token in doc:
-        token_list.append(doc.text)
-    return token_list
+    def tokenise(doc: object):
+        token_list = []
+        for token in doc:
+            token_list.append(doc.text)
+        return token_list

@@ -48,3 +48,4 @@ class sentiment():
 def sent(text:list):
     sentiment_object = sentiment(text)
     results = asyncio.run(sentiment_object._async_polarity())
+    return results

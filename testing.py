@@ -55,3 +55,5 @@ clean_stats = dict_search(raw_stats, [
 stats_df = pd.DataFrame(clean_stats)
 
 raw_comments = yt.commentThread(ids)
+
+print(raw_comments)

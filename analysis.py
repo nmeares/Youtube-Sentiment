@@ -29,8 +29,8 @@ class sentiment():
         tokens = self._tokenise(nlp_text)
         return self._dropwords(tokens)
     
-    async def _polarity(self):
-        string = " ".join(self.filtered)
+    def _polarity(self, text):
+        string = " ".join(self._filtered(text))
         blob = TextBlob(string)
         
         if blob.sentiment.polarity > 0:
@@ -40,3 +40,6 @@ class sentiment():
         elif blob.sentiment.polarity < 0:
             sentiment = 'negative'
         return sentiment
+    
+    def polarity(self):
+        

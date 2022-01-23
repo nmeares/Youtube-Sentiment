@@ -133,7 +133,7 @@ class youtube():
             return request
         
         async def _get_responses():
-            responses = await asyncio.gather(map(_request, videoIds))
+            responses = await asyncio.gather(*[_request for _ in videoIds])
             return responses
         
         coroutine = _get_responses()

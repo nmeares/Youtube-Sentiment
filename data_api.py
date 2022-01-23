@@ -99,7 +99,7 @@ class youtube():
         )
         return request.execute()
 
-    def commentThread(self, videoId, part="snippet", pageToken=None):
+    def _async_commentThread(self, videoId, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters
@@ -117,7 +117,6 @@ class youtube():
             returns a dict
         '''
         videoIds = [videoId] if isinstance(videoId, str) else videoId
-        
         async def _request(id):
             try:
                 request = await self.api.commentThreads().list(
@@ -127,7 +126,7 @@ class youtube():
                     maxResults=self.maxResults
                 ).execute()
             except googleapiclient.errors.HttpError as error:
-                values.append({id:error.error_details[0]['reason']})
+                return {id:error.error_details[0]['reason']}
             except Exception as error:
                 print(f"Error on videoId {id}: {error}")
             return request
@@ -136,10 +135,11 @@ class youtube():
             responses = await asyncio.gather(map(_request, videoIds))
             return responses
         
-        
-        values = asyncio.run(_get_responses())
-        return values
+        coroutine = _get_responses()
+        return coroutine
     
+    def commentThread(self, videoId, part="snippet", pageToken=None):
+        
     
 
     def comment(self, commentId: str, part="snippet", pageToken=None):

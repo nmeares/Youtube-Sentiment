@@ -46,11 +46,11 @@ class sentiment():
         blob = TextBlob(string)
         
         if blob.sentiment.polarity > 0:
-            sentiment = 'positive'
+            sentiment = 1
         elif blob.sentiment.polarity == 0:
-            sentiment = 'neutral'
+            sentiment = 0
         elif blob.sentiment.polarity < 0:
-            sentiment = 'negative'
+            sentiment = -1
         return sentiment
     
     def polarity(self):

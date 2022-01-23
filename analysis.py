@@ -41,6 +41,6 @@ class sentiment():
             sentiment = 'negative'
         return sentiment
     
-    async def polarity(self):
+    async def _async_polarity(self):
         results = await asyncio.gather(map(self._polarity, self.docs))
         return results

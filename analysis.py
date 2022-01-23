@@ -29,8 +29,8 @@ class sentiment():
         tokens = self._tokenise(nlp_text)
         return self._dropwords(tokens)
     
-    def _polarity(self, text):
-        string = " ".join(self._filtered(text))
+    def _polarity(self, nlp_text):
+        string = " ".join(self._filtered(nlp_text))
         blob = TextBlob(string)
         
         if blob.sentiment.polarity > 0:
@@ -41,6 +41,6 @@ class sentiment():
             sentiment = 'negative'
         return sentiment
     
-    async def polarity(self, text_list):
-        results = await asyncio.gather(map(self._polarity, text_list))
+    async def polarity(self):
+        results = await asyncio.gather(map(self._polarity, self.docs))
         return results

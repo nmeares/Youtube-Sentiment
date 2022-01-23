@@ -1,4 +1,5 @@
 import os
+from black import asyncio
 import googleapiclient.discovery
 import googleapiclient.errors
 from helpers import paginated, chunked_list
@@ -116,9 +117,8 @@ class youtube():
             returns a dict
         '''
         videoIds = [videoId] if isinstance(videoId, str) else videoId
-        values = []
         
-        async def request(id):
+        async def _request(id):
             try:
                 request = await self.api.commentThreads().list(
                     part=part,
@@ -132,7 +132,11 @@ class youtube():
                 print(f"Error on videoId {id}: {error}")
             return request
         
+        async def _get_responses():
+            responses = await asyncio.gather(map(_request, videoIds))
+            return responses
         
+        values = asyncio.run(_get_responses())
         return values
     
     

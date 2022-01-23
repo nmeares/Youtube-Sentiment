@@ -12,13 +12,13 @@ class sentiment():
         self.docs = [self.nlp(text) for text in self.text_list]
         self.loop = asyncio.get_event_loop()
         
-    async def _tokenise(self, string):
+    async def _tokenise(self, string: str):
         token_list = []
         for token in string:
             token_list.append(token.text)
         return token_list
     
-    async def _dropwords(self, tokens):
+    async def _dropwords(self, tokens: list):
         dropped = []
         for word in tokens:
             lex = self.nlp.vocab[word]

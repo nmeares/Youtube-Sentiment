@@ -136,7 +136,7 @@ class youtube():
         async def _get_responses():
             tasks = []
             for id in videoIds:
-                tasks.append(asyncio.create_task(request(id)))    
+                tasks.append(asyncio.create_task(_async_request(id)))    
             responses = await asyncio.gather(*tasks)
             return responses
         

@@ -46,4 +46,4 @@ class sentiment():
         return result
     
     async def polarity(self):
-        return asyncio.run(await self._async_polarity())
+        return asyncio.run(self._async_polarity())

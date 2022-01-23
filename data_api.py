@@ -99,7 +99,7 @@ class youtube():
         )
         return request.execute()
 
-    async def commentThread(self, videoId, part="snippet", pageToken=None):
+    def commentThread(self, videoId, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters

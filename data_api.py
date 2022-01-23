@@ -118,6 +118,7 @@ class youtube():
             returns a dict
         '''
         videoIds = [videoId] if isinstance(videoId, str) else videoId
+        
         async def _request(id):
             try:
                 request = await self.api.commentThreads().list(

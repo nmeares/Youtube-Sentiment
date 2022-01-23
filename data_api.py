@@ -99,7 +99,7 @@ class youtube():
         )
         return request.execute()
 
-    def commentThread(self, videoId, part="snippet", pageToken=None):
+    async def commentThread(self, videoId, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters
@@ -135,6 +135,7 @@ class youtube():
         async def _get_responses():
             responses = await asyncio.gather(map(_request, videoIds))
             return responses
+        
         
         values = asyncio.run(_get_responses())
         return values

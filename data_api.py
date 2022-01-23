@@ -7,7 +7,7 @@ from helpers import paginated, chunked_list
 
 PAGE_LIMIT = 2  # To prevent exhausting api call budget whilst testing
 
-# TODO: add return function utilising dict_search
+
 class youtube():
 
     def __init__(self, api_key, resultsPerPage=50, maxPages=1000) -> None:
@@ -54,7 +54,7 @@ class youtube():
                 regionCode=regionCode,
                 pageToken=pageToken,
                 maxResults=self.maxResults
-                ).execute()
+            ).execute()
             return request
         except Exception as error:
             print(f"Error when requesting popular: {error}")
@@ -119,7 +119,7 @@ class youtube():
         '''
         # Create list of videoIds
         videoIds = [videoId] if isinstance(videoId, str) else videoId
-        
+
         # Asyncronous request
         async def _request(id):
             # Create event loop to wrap around youtube API (enables async)
@@ -134,19 +134,18 @@ class youtube():
             # Execute request with 'await' to allow next query to begin whilst waiting
             response = await loop.run_in_executor(None, request.execute())
             return response
-        
+
         # Create async event tasks and gather responses
         async def _responses():
             tasks = []
             for id in videoIds:
-                tasks.append(asyncio.create_task(_request(id)))    
+                tasks.append(asyncio.create_task(_request(id)))
             responses = await asyncio.gather(*tasks)
             return responses
-        
+
         # Run asyncronous api request
         response = asyncio.run(_responses())
         return response
-    
 
     def comment(self, commentId: str, part="snippet", pageToken=None):
         '''Retrieve information for specific comment ID(s)

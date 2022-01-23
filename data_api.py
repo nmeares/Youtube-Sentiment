@@ -100,7 +100,7 @@ class youtube():
         )
         return request.execute()
 
-    def _async_commentThread(self, videoId, part="snippet", pageToken=None):
+    def commentThread(self, videoId, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters
@@ -120,29 +120,23 @@ class youtube():
         videoIds = [videoId] if isinstance(videoId, str) else videoId
         
         async def _request(id):
-            try:
-                request = await self.api.commentThreads().list(
-                    part=part,
-                    videoId=id,
-                    pageToken=pageToken,
-                    maxResults=self.maxResults
-                ).execute()
-            except googleapiclient.errors.HttpError as error:
-                return {id:error.error_details[0]['reason']}
-            except Exception as error:
-                print(f"Error on videoId {id}: {error}")
+
+            request = await self.api.commentThreads().list(
+                part=part,
+                videoId=id,
+                pageToken=pageToken,
+                maxResults=self.maxResults
+            ).execute()
+
             return request
         
         async def _get_responses():
             responses = await asyncio.gather(*[_request for _ in videoIds])
             return responses
         
-        coroutine = _get_responses()
-        return coroutine
+        response = asyncio.run(_get_responses())
+        return response
     
-    def commentThread(self, videoId, part="snippet", pageToken=None):
-        response = self._async_commentThread(videoId, part=part, pageToken=None)
-        return asyncio.run(response)
 
     def comment(self, commentId: str, part="snippet", pageToken=None):
         '''Retrieve information for specific comment ID(s)

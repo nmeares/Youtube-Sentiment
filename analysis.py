@@ -26,7 +26,8 @@ class sentiment():
         return dropped
     
     def _filtered(self, nlp_text):
-        
+        tokens = self._tokenise(nlp_text)
+        return self._dropwords(tokens)
     
     async def _polarity(self):
         string = " ".join(self.filtered)

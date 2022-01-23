@@ -131,7 +131,7 @@ class youtube():
             return request
         
         async def _get_responses():
-            responses = await asyncio.gather(*[_request for _ in videoIds])
+            responses = await asyncio.gather(*map(_request, videoIds))
             return responses
         
         response = asyncio.run(_get_responses())

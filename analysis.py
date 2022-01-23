@@ -31,7 +31,7 @@ class sentiment():
     
     async def _polarity(self, nlp_text):
         string = " ".join(self._filtered(nlp_text))
-        blob = TextBlob(string)
+        blob = await TextBlob(string)
         
         if blob.sentiment.polarity > 0:
             sentiment = 'positive'
@@ -42,6 +42,7 @@ class sentiment():
         return sentiment
     
     async def _async_polarity(self):
+        
         return await asyncio.gather(map(self._polarity, self.docs))
     
     async def polarity(self):

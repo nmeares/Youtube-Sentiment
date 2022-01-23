@@ -42,7 +42,7 @@ class sentiment():
         return sentiment
     
     async def _async_polarity(self):
-        await asyncio.gather(map(self._polarity, self.docs))
+        return await asyncio.gather(map(self._polarity, self.docs))
     
     async def polarity(self):
         return asyncio.run(await self._async_polarity())

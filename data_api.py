@@ -121,12 +121,12 @@ class youtube():
         
         async def _request(id):
 
-            async with self.api.commentThreads().list(
+            request = api.commentThreads().list(
                 part=part,
                 videoId=id,
                 pageToken=pageToken,
                 maxResults=self.maxResults
-            ) as request:
+            )
                 response = await request.execute()
                 return response
         

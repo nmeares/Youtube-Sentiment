@@ -1,3 +1,4 @@
+import asyncio
 import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
 from textblob import TextBlob
@@ -9,7 +10,6 @@ class sentiment():
         self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
         self.docs = [self.nlp(text) for text in self.text_list]
-        self.polarity = self._polarity()
         
     def _tokenise(self, string):
         token_list = []
@@ -41,5 +41,6 @@ class sentiment():
             sentiment = 'negative'
         return sentiment
     
-    def polarity(self):
-        
+    async def polarity(self, text_list):
+        results = await asyncio.gather(map(self._polarity, text_list))
+        return results

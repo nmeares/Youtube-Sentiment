@@ -129,6 +129,7 @@ class youtube():
                 pageToken=pageToken,
                 maxResults=self.maxResults
             )
+            # Execute request with 'await' to allow next query to begin whilst waiting
             response = await loop.run_in_executor(None, request.execute())
             return response
         

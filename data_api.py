@@ -117,8 +117,10 @@ class youtube():
         dict
             returns a dict
         '''
+        # Create list of videoIds
         videoIds = [videoId] if isinstance(videoId, str) else videoId
         
+        # Asyncronous request
         async def _request(id):
             # Create event loop to wrap around youtube API (enables async)
             loop = asyncio.get_event_loop()
@@ -133,6 +135,7 @@ class youtube():
             response = await loop.run_in_executor(None, request.execute())
             return response
         
+        # Create async event tasks and gather responses
         async def _responses():
             tasks = []
             for id in videoIds:
@@ -140,6 +143,7 @@ class youtube():
             responses = await asyncio.gather(*tasks)
             return responses
         
+        # Run asyncronous api request
         response = asyncio.run(_responses())
         return response
     

@@ -5,29 +5,30 @@ from textblob import TextBlob
 
 class sentiment():
     
-    def __init__(self, text: str):
-        self.text = text
+    def __init__(self, text:list):
+        self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
-        self.doc = self.nlp(self.text)
-        self.tokens = self._tokenise()
-        self.filtered = self._dropwords()
+        self.docs = [self.nlp(text) for text in self.text_list]
         self.polarity = self._polarity()
         
-    def _tokenise(self):
+    def _tokenise(self, string):
         token_list = []
-        for token in self.doc:
+        for token in string:
             token_list.append(token.text)
         return token_list
     
-    def _dropwords(self):
-        filtered = []
-        for word in self.tokens:
+    def _dropwords(self, tokens):
+        dropped = []
+        for word in tokens:
             lex = self.nlp.vocab[word]
             if lex.is_stop == False:
-                filtered.append(word)
-        return filtered
+                dropped.append(word)
+        return dropped
     
-    def _polarity(self):
+    def _filtered(self, nlp_text):
+        
+    
+    async def _polarity(self):
         string = " ".join(self.filtered)
         blob = TextBlob(string)
         

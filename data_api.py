@@ -120,8 +120,9 @@ class youtube():
         videoIds = [videoId] if isinstance(videoId, str) else videoId
         
         async def _request(id):
+            # Create event loop to wrap around youtube API (enables async)
             loop = asyncio.get_event_loop()
-            
+            # Create request
             request = self.api.commentThreads().list(
                 part=part,
                 videoId=id,

@@ -119,28 +119,25 @@ class youtube():
         '''
         videoIds = [videoId] if isinstance(videoId, str) else videoId
         
-        async def _async_request(id):
-            return await _request(id)
-        
-        def _request(id):
+        async def _request(id):
 
-            request = self.api.commentThreads().list(
+            async with self.api.commentThreads().list(
                 part=part,
                 videoId=id,
                 pageToken=pageToken,
                 maxResults=self.maxResults
-            ).execute()
-
-            return request
+            ) as request:
+                response = await request.execute()
+                return response
         
-        async def _get_responses():
+        async def _responses():
             tasks = []
             for id in videoIds:
-                tasks.append(asyncio.create_task(_async_request(id)))    
+                tasks.append(asyncio.create_task(_request(id)))    
             responses = await asyncio.gather(*tasks)
             return responses
         
-        response = asyncio.run(_get_responses())
+        response = asyncio.run(_responses())
         return response
     
 

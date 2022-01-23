@@ -10,6 +10,7 @@ class sentiment():
         self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
         self.docs = [self.nlp(text) for text in self.text_list]
+        self.loop = asyncio.get_event_loop()
         
     def _tokenise(self, string):
         token_list = []
@@ -44,3 +45,6 @@ class sentiment():
     async def _async_polarity(self):
         results = await asyncio.gather(map(self._polarity, self.docs))
         return results
+    
+    def polarity(self):
+        return self.loop.run_until_complete(self._async_polarity()) 

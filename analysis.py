@@ -24,13 +24,13 @@ class sentiment():
         self.nlp = spacy.load('en_core_web_sm')
         self.docs = [self.nlp(text) for text in self.text_list]
     @timeit    
-    async def _tokenise(self, string: str):
+    def _tokenise(self, string: str):
         token_list = []
         for token in string:
             token_list.append(token.text)
         return token_list
     @timeit
-    async def _dropwords(self, tokens: list):
+    def _dropwords(self, tokens: list):
         dropped = []
         for word in tokens:
             lex = self.nlp.vocab[word]
@@ -38,13 +38,13 @@ class sentiment():
                 dropped.append(word)
         return dropped
     
-    async def _filtered(self, nlp_text):
+    def _filtered(self, nlp_text):
         tokens = self._tokenise(nlp_text)
         return self._dropwords(tokens)
-    
-    async def _polarity(self, nlp_text):
+    @timeit
+    def _polarity(self, nlp_text):
         string = " ".join(self._filtered(nlp_text))
-        blob = await TextBlob(string)
+        blob = TextBlob(string)
         
         if blob.sentiment.polarity > 0:
             sentiment = 'positive'
@@ -54,11 +54,7 @@ class sentiment():
             sentiment = 'negative'
         return sentiment
     
-    async def _async_polarity(self):
-        result = await asyncio.gather(map(self._polarity, self.docs))
-        return result
+    def polarity(self):
+        result = map(self._polarity, self.docs)
+        return list(result)
     
-def sent(text:list):
-    sentiment_object = sentiment(text)
-    results = sentiment_object._async_polarity()
-    return asyncio.run(results)

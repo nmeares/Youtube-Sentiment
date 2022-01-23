@@ -1,4 +1,5 @@
 import os
+from urllib import response
 from black import asyncio
 import googleapiclient.discovery
 import googleapiclient.errors
@@ -139,8 +140,8 @@ class youtube():
         return coroutine
     
     def commentThread(self, videoId, part="snippet", pageToken=None):
-        
-    
+        response = self._async_commentThread(videoId, part=part, pageToken=None)
+        return asyncio.run(response)
 
     def comment(self, commentId: str, part="snippet", pageToken=None):
         '''Retrieve information for specific comment ID(s)

@@ -2,6 +2,7 @@ import asyncio
 import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
 from textblob import TextBlob
+import timeit
 
 
 class sentiment():
@@ -10,13 +11,13 @@ class sentiment():
         self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
         self.docs = [self.nlp(text) for text in self.text_list]
-        
+    @timeit    
     async def _tokenise(self, string: str):
         token_list = []
         for token in string:
             token_list.append(token.text)
         return token_list
-    
+    @timeit
     async def _dropwords(self, tokens: list):
         dropped = []
         for word in tokens:

@@ -121,13 +121,13 @@ class youtube():
         
         async def _request(id):
             loop = asyncio.get_event_loop()
+            
             request = self.api.commentThreads().list(
                 part=part,
                 videoId=id,
                 pageToken=pageToken,
                 maxResults=self.maxResults
             )
-            
             response = await loop.run_in_executor(None, request.execute())
             return response
         

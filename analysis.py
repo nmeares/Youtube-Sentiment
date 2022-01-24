@@ -10,13 +10,13 @@ class sentiment():
         self.nlp = spacy.load('en_core_web_sm')
         self.docs = [self.nlp(text) for text in self.text_list]
 
-    def _tokenise(self, string: str):
+    def _tokenise(self, string: str) -> list:
         token_list = []
         for token in string:
             token_list.append(token.text)
         return token_list
 
-    def _dropwords(self, tokens: list):
+    def _dropwords(self, tokens: list) -> list:
         dropped = []
         for word in tokens:
             lex = self.nlp.vocab[word]
@@ -24,11 +24,11 @@ class sentiment():
                 dropped.append(word)
         return dropped
 
-    def _filtered(self, nlp_text):
+    def _filtered(self, nlp_text) -> list:
         tokens = self._tokenise(nlp_text)
         return self._dropwords(tokens)
 
-    def _polarity(self, nlp_text):
+    def _polarity(self, nlp_text) -> int:
         string = " ".join(self._filtered(nlp_text))
         blob = TextBlob(string)
 
@@ -49,7 +49,7 @@ class sentiment():
         Returns
         -------
         list
-            [description]
+            List of polarity integers
         '''
         result = map(self._polarity, self.docs)
         return list(result)

@@ -100,6 +100,7 @@ class youtube():
         )
         return request.execute()
 
+    # Retrieve comment thread details
     def commentThread(self, videoId, part="snippet", pageToken=None):
         '''Retrieve comment thread for specific video ID(s)
 

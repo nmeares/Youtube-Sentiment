@@ -173,13 +173,18 @@ class youtube():
     
     # Retrieve channel information
     @paginated(PAGE_LIMIT)
-    def channel(self, channelId, part="snippet", pageToken=None) -> dict:
-        ids = ",".join(channelId)
-        request = self.api.channels().list(
-            part=part,
-            id=ids,
-            pageToken=pageToken,
-            maxResults=self.maxResults
-            )
-        return request.execute()
+    def channel(self, channelId, part="snippet", pageToken=None) -> list:
+        values = []
+        # Chunk the list by 50 to remain within query limits
+        id_lst = chunked_list(channelId, 50)
+        for ids in id_lst:
+            id = ",".join(ids)
+            request = self.api.channels().list(
+                part=part,
+                id=id,
+                pageToken=pageToken,
+                maxResults=self.maxResults
+                )
+            values.append(request.execute())
+        return values
         

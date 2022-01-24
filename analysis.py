@@ -40,6 +40,16 @@ class sentiment():
             sentiment = -1
         return sentiment
 
-    def polarity(self):
+    def polarity(self) -> list: 
+        '''Generate polarity from text
+        1 : Positive sentiment
+        0 : Neutral sentiment
+        -1 : Negative sentiment
+
+        Returns
+        -------
+        list
+            [description]
+        '''
         result = map(self._polarity, self.docs)
         return list(result)

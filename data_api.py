@@ -172,7 +172,6 @@ class youtube():
         return values
     
     # Retrieve channel information
-    @paginated(PAGE_LIMIT)
     def channel(self, channelId, part="snippet", pageToken=None) -> list:
         values = []
         # Chunk the list by 50 to remain within query limits

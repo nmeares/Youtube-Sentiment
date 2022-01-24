@@ -4,6 +4,8 @@ from textblob import TextBlob
 
 
 class sentiment():
+    '''Sentiment Analysis Object
+    '''
 
     def __init__(self, text: list):
         self.text_list = [text] if not isinstance(text, list) else text

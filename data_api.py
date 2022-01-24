@@ -9,7 +9,8 @@ PAGE_LIMIT = 2  # To prevent exhausting api call budget during testing
 
 
 class youtube():
-
+    '''Youtube data API object
+    '''
     def __init__(self, api_key, resultsPerPage=50, maxPages=1000) -> None:
         self.api_key = api_key
         self.maxResults = resultsPerPage
@@ -29,7 +30,7 @@ class youtube():
     def video_stats(self, id) -> list:
         values = []
         # Chunk the list by 50 to remain within query limits
-        id_lst = chunked_list(id, 50)
+        id_lst = chunked_list(id, self.maxResults)
         # Loop chunked list
         for ids in id_lst:
             # Convert to string list
@@ -156,7 +157,7 @@ class youtube():
         '''
         values = []
         # Chunk the list by 50 to remain within query limits
-        id_lst = chunked_list(commentId, 50)
+        id_lst = chunked_list(commentId, self.maxResults)
 
         for ids in id_lst:
             # Convert to string list
@@ -175,7 +176,7 @@ class youtube():
     def channel(self, channelId, part="snippet", pageToken=None) -> list:
         values = []
         # Chunk the list by 50 to remain within query limits
-        id_lst = chunked_list(channelId, 50)
+        id_lst = chunked_list(channelId, self.maxResults)
         for ids in id_lst:
             id = ",".join(ids)
             request = self.api.channels().list(

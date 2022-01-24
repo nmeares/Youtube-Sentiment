@@ -5,7 +5,7 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from helpers import paginated, chunked_list
 
-PAGE_LIMIT = 2  # To prevent exhausting api call budget whilst testing
+PAGE_LIMIT = 2  # To prevent exhausting api call budget during testing
 
 
 class youtube():
@@ -45,7 +45,7 @@ class youtube():
 
     @paginated(PAGE_LIMIT)
     # Retrieve list of most popular videos
-    def popular(self, videoCategoryId, regionCode=None, pageToken=None):
+    def popular(self, videoCategoryId, regionCode=None, pageToken=None) -> dict:
         try:
             request = self.api.videos().list(
                 part="snippet",
@@ -71,7 +71,7 @@ class youtube():
 
     @paginated(PAGE_LIMIT)
     # Search by category ID
-    def category_search(self, categoryId: int, search_term=None, order="relevance", regionCode=None, pageToken=None):
+    def category_search(self, categoryId: int, search_term=None, order="relevance", regionCode=None, pageToken=None) -> dict:
         '''Search by Category ID
 
         Parameters
@@ -101,7 +101,7 @@ class youtube():
         return request.execute()
 
     # Retrieve comment thread details
-    def commentThread(self, videoId, part="snippet", pageToken=None):
+    def commentThread(self, videoId, part="snippet", pageToken=None) -> list:
         '''Retrieve comment thread for specific video ID(s)
 
         Parameters
@@ -137,7 +137,7 @@ class youtube():
         return values
 
 
-    def comment(self, commentId: str, part="snippet", pageToken=None):
+    def comment(self, commentId: str, part="snippet", pageToken=None) -> list:
         '''Retrieve information for specific comment ID(s)
 
         Parameters
@@ -170,3 +170,16 @@ class youtube():
             )
             values.append(request.execute())
         return values
+    
+    # Retrieve channel information
+    @paginated(PAGE_LIMIT)
+    def channel(self, channelId, part="snippet", pageToken=None) -> dict:
+        ids = ",".join(channelId)
+        request = self.api.comment().list(
+            part=part,
+            id=ids,
+            pageToken=pageToken,
+            maxResults=self.maxResults
+            )
+        return request.execute()
+        

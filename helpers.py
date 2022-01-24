@@ -58,7 +58,7 @@ def dict_search(dictionary: dict, search, list_depth=1) -> list:
 
 
 # Decorator function to expand paginated responses
-def paginated(max_pages):
+def paginated(max_pages) -> list:
     def decorate(func, combined=[], page=1):
         # Function wrapper
         # Recursively runs wrapped function while amending pageToken until max page limit reached

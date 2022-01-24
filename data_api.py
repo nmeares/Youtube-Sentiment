@@ -71,7 +71,7 @@ class youtube():
 
     @paginated(PAGE_LIMIT)
     # Search by category ID
-    def category_search(self, categoryId: int, search_term=None, order="relevance", regionCode=None, pageToken=None) -> dict:
+    def search(self, categoryId:int=None, search_term=None, order="relevance", regionCode=None, pageToken=None) -> dict:
         '''Search by Category ID
 
         Parameters

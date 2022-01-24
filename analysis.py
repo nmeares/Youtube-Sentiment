@@ -42,6 +42,7 @@ class sentiment():
 
     def polarity(self) -> list: 
         '''Generate polarity from text
+        
         1 : Positive sentiment
         0 : Neutral sentiment
         -1 : Negative sentiment

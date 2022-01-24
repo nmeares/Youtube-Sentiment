@@ -175,7 +175,7 @@ class youtube():
     @paginated(PAGE_LIMIT)
     def channel(self, channelId, part="snippet", pageToken=None) -> dict:
         ids = ",".join(channelId)
-        request = self.api.comment().list(
+        request = self.api.channels().list(
             part=part,
             id=ids,
             pageToken=pageToken,

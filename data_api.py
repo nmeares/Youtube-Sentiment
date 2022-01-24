@@ -119,33 +119,22 @@ class youtube():
         '''
         # Create list of videoIds
         videoIds = [videoId] if isinstance(videoId, str) else videoId
+        values = []
+        for id in videoIds:
+            try:
+                request = self.api.commentThreads().list(
+                    part=part,
+                    videoId=id,
+                    pageToken=pageToken,
+                    maxResults=self.maxResults
+                ).execute()
+                values.append(request)
+            except googleapiclient.errors.HttpError as error:
+                values.append({id:error.error_details[0]['reason']})
+            except Exception as error:
+                print(f"Error on videoId {id}: {error}")
+        return values
 
-        # Asyncronous request
-        async def _request(id):
-            # Create event loop to wrap around youtube API (enables async)
-            loop = asyncio.get_event_loop()
-            # Create request
-            request = self.api.commentThreads().list(
-                part=part,
-                videoId=id,
-                pageToken=pageToken,
-                maxResults=self.maxResults
-            )
-            # Execute request with 'await' to allow next query to begin whilst waiting
-            response = await loop.run_in_executor(None, request.execute())
-            return response
-
-        # Create async event tasks and gather responses
-        async def _responses():
-            tasks = []
-            for id in videoIds:
-                tasks.append(asyncio.create_task(_request(id)))
-            responses = await asyncio.gather(*tasks)
-            return responses
-
-        # Run asyncronous api request
-        response = asyncio.run(_responses())
-        return response
 
     def comment(self, commentId: str, part="snippet", pageToken=None):
         '''Retrieve information for specific comment ID(s)

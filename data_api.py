@@ -26,7 +26,7 @@ class youtube():
             developerKey=self.api_key)
 
     # Retrieve stats for video specific IDs (max 50)
-    def video_stats(self, id):
+    def video_stats(self, id) -> list(dict):
         values = []
         # Chunk the list by 50 to remain within query limits
         id_lst = chunked_list(id, 50)
@@ -60,7 +60,7 @@ class youtube():
             print(f"Error when requesting popular: {error}")
 
     # Retrieve list of video categories
-    def VideoCategories(self, regionCode):
+    def VideoCategories(self, regionCode) -> dict:
 
         # API videoCategory list request
         request = self.api.videoCategories().list(

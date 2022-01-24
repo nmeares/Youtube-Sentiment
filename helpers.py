@@ -2,7 +2,7 @@ from functools import wraps
 
 
 # Nested dictionary search function
-def dict_search(dictionary: dict, search, list_depth=1):
+def dict_search(dictionary: dict, search, list_depth=1) -> list:
     '''Nested dictionary search
     ------
     Allows user to recursively search a nested dictionary for specified key\n
@@ -88,5 +88,5 @@ def paginated(max_pages):
 
 
 # Function to chunk list
-def chunked_list(lst: list, n: int):
+def chunked_list(lst: list, n: int) -> list:
     return [lst[i:i + n] for i in range(0, len(lst), n)]

@@ -26,7 +26,7 @@ class youtube():
             developerKey=self.api_key)
 
     # Retrieve stats for video specific IDs (max 50)
-    def video_stats(self, id) -> list(dict):
+    def video_stats(self, id) -> list:
         values = []
         # Chunk the list by 50 to remain within query limits
         id_lst = chunked_list(id, 50)

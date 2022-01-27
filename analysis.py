@@ -2,7 +2,7 @@ import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
 from textblob import TextBlob
 
-
+# TODO: improve scalability (async / multithreading)
 class sentiment():
     '''Sentiment Analysis Object
     '''

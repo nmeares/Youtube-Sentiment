@@ -90,3 +90,6 @@ def paginated(max_pages) -> list:
 # Function to chunk list
 def chunked_list(lst: list, n: int) -> list:
     return [lst[i:i + n] for i in range(0, len(lst), n)]
+
+def min_max_scaler(series):
+    return (series-series.min())/(series.max()-series.min())

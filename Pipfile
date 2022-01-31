@@ -15,6 +15,7 @@ spacy = "*"
 pandas = "*"
 nest-asyncio = "*"
 matplotlib = "*"
+python-dotenv = "*"
 
 [dev-packages]
 autopep8 = "*"

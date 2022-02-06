@@ -6,11 +6,11 @@ from textblob import TextBlob
 class sentiment():
     '''Sentiment Analysis Object
     '''
-
+    # TODO: check if instance is series and if so then used vectorised functions and apply
     def __init__(self, text: list):
         self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
-        self.docs = [self.nlp(text) for text in self.text_list]
+        self.docs = [self.nlp(text) for text in self.text_list] # TODO: make pd.apply if series
 
     def _tokenise(self, string: str) -> list:
         token_list = []

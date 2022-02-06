@@ -5,11 +5,13 @@ from datetime import datetime
 
 from data_api import youtube
 from helpers import dict_search
+import pathlib
 
+PARENT_PATH = str(pathlib.Path(__file__).parent.parent)
 
 class yt_sentiment():
 
-    def __init__(self, db='Database/yt_sentiment.db'):
+    def __init__(self, db=PARENT_PATH + '/Database/yt_sentiment.db'):
         self.db = db if os.path.exists(db) else print(
             f"{db} does not exist! Please create and re-run.")
         try:

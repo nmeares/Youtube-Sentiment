@@ -2,7 +2,7 @@ import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
 from textblob import TextBlob
 
-# TODO: improve scalability (async / multithreading)
+#TODO: improve scalability (async / multithreading)
 class sentiment():
     '''Sentiment Analysis Object
     '''
@@ -10,9 +10,9 @@ class sentiment():
     def __init__(self, text: list):
         self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
-        self.docs = [self.nlp(text) for text in self.text_list] # TODO: make pd.apply if series
+        self.docs = [self.nlp(text) for text in self.text_list] # TODO: make pd.apply if pd.series
 
-    def _tokenise(self, string: str) -> list:
+    def _tokenise(self, string: str) -> list: # TODO: use str.split if pd.series
         token_list = []
         for token in string:
             token_list.append(token.text)

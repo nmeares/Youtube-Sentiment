@@ -16,7 +16,7 @@ class sentiment():
             self.docs = [self.nlp(text) for text in self.text_list]
         # Allow for faster vectorisation if a pandas series is passed
         elif isinstance(self.text, pd.Series):
-            self.text_list = self.text.str.split()
+            self.text_list = self.text.str.split().astype(str)
             self.docs = self.text_list.apply(self.nlp).to_list()
         else:
             raise TypeError("Object only supports str, list or pd.Series!")

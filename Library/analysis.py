@@ -19,6 +19,7 @@ class sentiment():
             self.text = self.text.str.split()
             self.docs = self.text.apply(self.nlp).to_list()
         else:
+            raise TypeError("Object only supports str, list or pd.Series!")
             
             
     def _tokenise(self, string: str) -> list: # TODO: use str.split if pd.series

@@ -66,5 +66,5 @@ class sentiment():
         if isinstance(self.docs, list):
             result = map(self._polarity, self.docs)
         elif isinstance(self.docs, pd.Series):
-            result = self.docs.apply(self._polarity)
+            result = self._polarity(self.docs)
         return list(result)

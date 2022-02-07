@@ -12,12 +12,12 @@ class sentiment():
         self.text = text
         self.nlp = spacy.load('en_core_web_sm')
         if isinstance(self.text, (str, list)):
-            self.text = [self.text] if not isinstance(self.text, list) else self.text
+            self.text_list = [self.text] if not isinstance(self.text, list) else self.text
             self.docs = [self.nlp(text) for text in self.text_list]
         # Allow for faster vectorisation if a pandas series is passed
         elif isinstance(self.text, pd.Series):
-            self.text = self.text.str.split()
-            self.docs = self.text.apply(self.nlp).to_list()
+            self.text_list = self.text.str.split()
+            self.docs = self.text_list.apply(self.nlp).to_list()
         else:
             raise TypeError("Object only supports str, list or pd.Series!")
             

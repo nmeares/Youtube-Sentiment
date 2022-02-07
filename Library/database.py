@@ -3,8 +3,8 @@ import os
 from decouple import config
 from datetime import datetime
 
-from data_api import youtube
-from helpers import dict_search
+from .data_api import youtube
+from .helpers import dict_search
 import pathlib
 
 PARENT_PATH = str(pathlib.Path(__file__).parent.parent)

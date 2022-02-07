@@ -16,7 +16,7 @@ class sentiment():
             self.docs = [self.nlp(text) for text in self.text_list]
         # Allow for faster vectorisation if a pandas series is passed
         elif isinstance(self.text, pd.Series):
-            self.docs = self.text_list.apply(self.nlp).to_list()
+            self.docs = self.text_list.str.split().astype(str)
         else:
             raise TypeError("Object only supports str, list or pd.Series!")
             
@@ -36,10 +36,7 @@ class sentiment():
         return dropped
 
     def _filtered(self, nlp_text) -> list:
-        if isinstance(nlp_text, list):
-            tokens = self._tokenise(nlp_text)
-        elif isinstance(nlp_text, pd.Series):
-            tokens = nlp_text.str.split().astype(str)
+        tokens = self._tokenise(nlp_text)
         return self._dropwords(tokens)
 
     def _polarity(self, nlp_text) -> int:

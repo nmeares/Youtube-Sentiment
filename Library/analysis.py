@@ -14,7 +14,7 @@ class sentiment():
         if isinstance(self.text, (str, list)):
             self.text_list = [self.text] if not isinstance(self.text, list) else self.text
             self.docs = [self.nlp(text) for text in self.text_list]
-            self.tokens = 
+            self.tokens = [self._tokenise(doc) for doc in self.docs]
         # Allow for faster vectorisation if a pandas series is passed
         elif isinstance(self.text, pd.Series):
             self.docs = self.text.apply(self.nlp)
@@ -64,6 +64,5 @@ class sentiment():
         if isinstance(self.docs, list):
             result = map(self._polarity, self.docs)
         elif isinstance(self.docs, pd.Series):
-            
-            result = self._polarity(tokens)
+            result = self._polarity(self.tokens.to_list())
         return list(result)

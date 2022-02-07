@@ -15,8 +15,7 @@ class sentiment():
         self.text = text
         self.nlp = spacy.load('en_core_web_sm')
         if isinstance(self.text, (str, list)):
-            self.text_list = [self.text] if not isinstance(
-                self.text, list) else self.text
+            self.text_list = [self.text] if not isinstance(self.text, list) else self.text
             self.docs = [self.nlp(text) for text in self.text_list]
             self.tokens = [self._tokenise(doc) for doc in self.docs]
         # Allow for faster vectorisation if a pandas series is passed

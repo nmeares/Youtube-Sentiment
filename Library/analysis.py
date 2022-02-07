@@ -20,7 +20,7 @@ class sentiment():
             self.tokens = [self._tokenise(doc) for doc in self.docs]
         # Allow for faster vectorisation if a pandas series is passed
         elif isinstance(self.text, pd.Series):
-            self.tokens = self.text.str.split().astype(str)
+            self.tokens = self.text.str.split()
         else:
             raise TypeError("Object only supports str, list or pd.Series!")
 

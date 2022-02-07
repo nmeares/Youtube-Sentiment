@@ -3,16 +3,20 @@ import pandas as pd
 from spacy.lang.en.stop_words import STOP_WORDS
 from textblob import TextBlob
 
-#TODO: improve scalability (async / multithreading)
+# TODO: improve scalability (async / multithreading)
+
+
 class sentiment():
     '''Sentiment Analysis Object
     '''
     # TODO: check if instance is series and if so then used vectorised functions and apply
+
     def __init__(self, text):
         self.text = text
         self.nlp = spacy.load('en_core_web_sm')
         if isinstance(self.text, (str, list)):
-            self.text_list = [self.text] if not isinstance(self.text, list) else self.text
+            self.text_list = [self.text] if not isinstance(
+                self.text, list) else self.text
             self.docs = [self.nlp(text) for text in self.text_list]
             self.tokens = [self._tokenise(doc) for doc in self.docs]
         # Allow for faster vectorisation if a pandas series is passed
@@ -21,9 +25,8 @@ class sentiment():
             self.tokens = self.docs.str.split().astype(str)
         else:
             raise TypeError("Object only supports str, list or pd.Series!")
-            
-            
-    def _tokenise(self, string: str) -> list: # TODO: use str.split if pd.series
+
+    def _tokenise(self, string: str) -> list:  # TODO: use str.split if pd.series
         token_list = []
         for token in string:
             token_list.append(token.text)
@@ -49,9 +52,9 @@ class sentiment():
             sentiment = -1
         return sentiment
 
-    def polarity(self) -> list: 
+    def polarity(self) -> list:
         '''Generate polarity from text
-        
+
         1 : Positive sentiment
         0 : Neutral sentiment
         -1 : Negative sentiment
@@ -61,8 +64,8 @@ class sentiment():
         list
             List of polarity integers
         '''
-        if isinstance(self.docs, list):
-            result = map(self._polarity, self.docs)
-        elif isinstance(self.docs, pd.Series):
-            result = self._polarity(self.tokens.to_list())
+        if isinstance(self.tokens, list):
+            result = map(self._polarity, self.tokens)
+        elif isinstance(self.tokens, pd.Series):
+            result = self.tokens.apply(self._polarity)
         return list(result)

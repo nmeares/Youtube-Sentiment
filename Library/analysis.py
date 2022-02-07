@@ -1,4 +1,5 @@
 import spacy
+import pandas as pd
 from spacy.lang.en.stop_words import STOP_WORDS
 from textblob import TextBlob
 
@@ -8,11 +9,18 @@ class sentiment():
     '''
     # TODO: check if instance is series and if so then used vectorised functions and apply
     def __init__(self, text):
-        self._instance = type(text)
-        self.text_list = [text] if not isinstance(text, list) else text
+        self.text = text
         self.nlp = spacy.load('en_core_web_sm')
-        self.docs = [self.nlp(text) for text in self.text_list] # TODO: make pd.apply if pd.series
-
+        if isinstance(self.text, (str, list)):
+            self.text = [self.text] if not isinstance(self.text, list) else self.text
+            self.docs = [self.nlp(text) for text in self.text_list]
+        # Allow for faster vectorisation if a pandas series is passed
+        elif isinstance(self.text, pd.Series):
+            self.text = self.text.str.split()
+            self.docs = self.text.apply(self.nlp).to_list()
+        else:
+            
+            
     def _tokenise(self, string: str) -> list: # TODO: use str.split if pd.series
         token_list = []
         for token in string:

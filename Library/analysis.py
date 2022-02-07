@@ -36,7 +36,10 @@ class sentiment():
         return dropped
 
     def _filtered(self, nlp_text) -> list:
-        tokens = self._tokenise(nlp_text)
+        if isinstance(nlp_text, list):
+            tokens = self._tokenise(nlp_text)
+        elif isinstance(nlp_text, pd.Series):
+            tokens = nlp_text.str.split().astype(str)
         return self._dropwords(tokens)
 
     def _polarity(self, nlp_text) -> int:

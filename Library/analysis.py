@@ -7,7 +7,8 @@ class sentiment():
     '''Sentiment Analysis Object
     '''
     # TODO: check if instance is series and if so then used vectorised functions and apply
-    def __init__(self, text: list):
+    def __init__(self, text):
+        self._instance = type(text)
         self.text_list = [text] if not isinstance(text, list) else text
         self.nlp = spacy.load('en_core_web_sm')
         self.docs = [self.nlp(text) for text in self.text_list] # TODO: make pd.apply if pd.series

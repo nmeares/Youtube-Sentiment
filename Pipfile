@@ -16,6 +16,7 @@ pandas = "*"
 nest-asyncio = "*"
 matplotlib = "*"
 python-dotenv = "*"
+wordcloud = "*"
 
 [dev-packages]
 autopep8 = "*"
